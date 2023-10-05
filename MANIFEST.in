@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include erpstorefront_version2 *.css
+recursive-include erpstorefront_version2 *.csv
+recursive-include erpstorefront_version2 *.html
+recursive-include erpstorefront_version2 *.ico
+recursive-include erpstorefront_version2 *.js
+recursive-include erpstorefront_version2 *.json
+recursive-include erpstorefront_version2 *.md
+recursive-include erpstorefront_version2 *.png
+recursive-include erpstorefront_version2 *.py
+recursive-include erpstorefront_version2 *.svg
+recursive-include erpstorefront_version2 *.txt
+recursive-exclude erpstorefront_version2 *.pyc
