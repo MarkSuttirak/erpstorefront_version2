@@ -4,4 +4,5 @@
 *.swp
 tags
 erpstorefront_version2/docs/current
+erpnext_storefront_v2
 node_modules/
