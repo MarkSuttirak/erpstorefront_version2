@@ -201,3 +201,4 @@ app_license = "MIT"
 # ]
 
 website_route_rules = [{'from_route': '/erpnext_storefront_v2/<path:app_path>', 'to_route': 'erpnext_storefront_v2'},]
+fixtures = ["Custom Field"]
