@@ -26,34 +26,32 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { DataType} from "@/typing"
+import { UserType} from "@/typing"
 import { useFrappeGetDocList } from "frappe-react-sdk"
 import { PostContext } from "@/provider/postProvider"
 import { useContext, useEffect } from "react"
 
 
-export function ModelSelector({mode} : {mode : string} ) {
+export function WriterSelector({mode} : {mode : string} ) {
   const [open, setOpen] = React.useState(false)
-  const [selectedModel, setSelectedModel] = React.useState<DataType>()
-  var {data ,isLoading} = useFrappeGetDocList<DataType>('Blog Category',{fields : [ 'title',
-  'name',
-  'published'
-   ]} )
+  const [selectedModel, setSelectedModel] = React.useState<UserType>()
   const postContext = useContext(PostContext);
-  useEffect(() => {
-    setSelectedModel(postContext.data)
+  var {data ,isLoading} = useFrappeGetDocList<UserType>('Blogger',{fields : [
+  'name',
+  'full_name'
+   ]} )
+   useEffect(() => {
     if(selectedModel)
     {
-      postContext.ChangeObject(undefined,'category',selectedModel.name)
+      postContext.ChangeObject(undefined,'writer',selectedModel?.name)
     }
   },[selectedModel])
   //use commandGroup tu categorise category in group
   return (
-
     <div className="grid gap-2">
       <HoverCard openDelay={200}>
         <HoverCardTrigger asChild>
-          <Label htmlFor="model">Category</Label>
+          <Label htmlFor="model">Writter</Label>
         </HoverCardTrigger>
         <HoverCardContent
           align="start"
@@ -74,7 +72,7 @@ export function ModelSelector({mode} : {mode : string} ) {
             aria-label="Select a model"
             className="w-full justify-between"
           >
-            {selectedModel ? selectedModel.title : "Select a model..."}
+            {selectedModel ? selectedModel.full_name : "Select a model..."}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -83,13 +81,13 @@ export function ModelSelector({mode} : {mode : string} ) {
             <Command loop>
               <CommandList className="h-[var(--cmdk-list-height)] max-h-[400px]">
                 <CommandInput placeholder="Search Models..." />
-                <CommandEmpty>No Models found.</CommandEmpty>
+                <CommandEmpty>No users found.</CommandEmpty>
                 <HoverCardTrigger />
                 {data?.map((type) => (
                   <ModelItem
-                    key={type.title}
+                    key={type.full_name}
                     model={type}
-                    isSelected={selectedModel?.title === type.title}
+                    isSelected={selectedModel?.full_name === type.full_name}
                     onSelect={() => {
                       setSelectedModel(type)
                       setOpen(false)
@@ -106,7 +104,7 @@ export function ModelSelector({mode} : {mode : string} ) {
 }
 
 interface ModelItemProps {
-  model: DataType
+  model: UserType
   isSelected: boolean
   onSelect: () => void
 }
@@ -116,12 +114,12 @@ function ModelItem({ model, isSelected, onSelect }: ModelItemProps) {
 
   return (
     <CommandItem
-      key={model.title}
+      key={model.full_name}
       onSelect={onSelect}
       ref={ref}
       className="aria-selected:bg-primary aria-selected:text-primary-foreground"
     >
-      {model.title}
+      {model.full_name}
       <CheckIcon
         className={cn(
           "ml-auto h-4 w-4",

@@ -24,19 +24,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Suspense } from "react"
+import Loading from "@/static/loading"
 
 import { DataTablePagination } from "../taskComponent/data-table-pagination"
 import { DataTableToolbar } from "../taskComponent/data-table-toolbar"
+import { useRouter } from "next/navigation"
+import { useContext } from "react"
+import { TabContext } from "@/provider/tabProvider"
+import { PostContext } from "@/provider/postProvider"
+import { TypeContext } from "@/provider/typeProvider"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+  columns: (ColumnDef<TData, TValue>)[]
   data: TData[]
+  currentTab : string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const tabType = useContext(TabContext);
+  const postContext = useContext(PostContext)
+  const typeContext = useContext(TypeContext)
+  const router = useRouter()
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -44,7 +56,24 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
-
+  const [goView, setGoView] = React.useState<string>('no')
+  React.useEffect(() => {
+    if(goView != 'no' )
+    {
+      let id = goView.match(/\d+/g)?.join('');
+      if(id){
+     
+        if(tabType.variable == 'Categories')
+        {
+          typeContext.ChangeVariable(id)
+          router.push('/pages/editCategory')
+        }else {
+          postContext.ChangeVariable(id)
+          router.push('/pages/viewBlog')
+        }
+      }
+    }
+  },[goView])
   const table = useReactTable({
     data,
     columns,
@@ -77,7 +106,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -90,6 +119,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
+          <Suspense fallback={<Loading/>}>
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
@@ -98,10 +128,10 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id}   onClick={() => {cell.getValue()? setGoView(cell.id) : null}} >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -118,6 +148,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+          </Suspense>
         </Table>
       </div>
       <DataTablePagination table={table} />

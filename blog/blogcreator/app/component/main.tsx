@@ -1,21 +1,21 @@
+
 import { Metadata } from "next"
 import Image from "next/image"
 import { Menu } from "./mainComponent/menu"
 import { Sidebar } from "./mainComponent/sidebar"
 import { playlists } from "./mainData/playlists"
 import TaskPage from "./task"
-import PlaygroundPage from "./playground"
+
 
 
 export const metadata: Metadata = {
   title: "Music App",
   description: "Example music app using the components.",
-}
-var edit = true;
+} 
 
 export default function MusicPage() {
-
   
+
   return (
     <>
       <div className="md:hidden">
@@ -42,7 +42,7 @@ export default function MusicPage() {
               <Sidebar playlists={playlists} className="hidden lg:block" />
               <div  className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                    {edit ? <PlaygroundPage></PlaygroundPage> : <TaskPage ></TaskPage>}                
+                     <TaskPage ></TaskPage>      
                 </div>
               </div>
             </div>
