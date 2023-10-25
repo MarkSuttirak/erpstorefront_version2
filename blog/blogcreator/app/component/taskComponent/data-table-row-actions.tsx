@@ -25,7 +25,9 @@ import { useContext } from "react"
 import { TabContext } from "@/provider/tabProvider"
 import { PostContext } from "@/provider/postProvider"
 import { TypeContext } from "@/provider/typeProvider"
-
+import { PageContext } from "@/provider/pageProvider"
+import { BloggerContext } from "@/provider/BloggerProvider"
+import { SystemPageContext } from "@/provider/SystemPageProvider"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -39,6 +41,10 @@ export function DataTableRowActions<TData>({
   const {toast} = useToast();
   const postContext = useContext(PostContext)
   const typeContext = useContext(TypeContext)
+  const pageContext = useContext(PageContext)
+  const blogContext = useContext(BloggerContext)
+  const systemPageContext = useContext(SystemPageContext);
+
   const tabType = useContext(TabContext);
   var doctype = 'Blog Post';
   type field = keyof DataDocList
@@ -90,11 +96,22 @@ export function DataTableRowActions<TData>({
 
   useEffect(() => {
     if(state){
-      if(tabType.variable == 'Categories')
-      {
-        deleteDoc('Blog Category', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})})
-      }else{
-        deleteDoc('Blog Post', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})})
+      switch (tabType.variable) {
+        case 'Categories':
+          deleteDoc('Blog Category', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})});
+          break;
+        case 'Post':
+          deleteDoc('Blog Post', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})});
+          break;
+        case 'Page':
+          deleteDoc('BlogPage', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})});
+          break;
+        case 'Blogger':
+          deleteDoc('Blogger', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})});
+          break;
+        case 'SystemPage':
+          deleteDoc('SystemPage', task.id).then(() => {mutate(),toast({title: "Information : file deleted successfully"})});
+          break;
       }
     }
   },[state])
@@ -102,13 +119,28 @@ export function DataTableRowActions<TData>({
   useEffect(() => {
     if (page !='default')
     {
-      if(tabType.variable == 'Categories')
-      {
-        typeContext.ChangeVariable(page)
-        router.push('/pages/editCategory')
-      }else{
-        postContext.ChangeVariable(page);
-        router.push('/pages/editBlog')
+      switch (tabType.variable) {
+        case 'Categories':
+          typeContext.ChangeVariable(page);
+          router.push('/pages/viewCategory');
+          break;
+        case 'Post':
+          postContext.ChangeVariable(page);
+          router.push('/pages/viewBlog');
+          break;
+        case 'Page':
+          pageContext.changeVariable(page);
+          router.push('/pages/viewPage');
+          break;
+        case 'Blogger':
+          blogContext.changeVariable(page);
+          router.push('/pages/viewBlog');
+          break;
+        case 'SystemPage':
+          systemPageContext.changeVariable(page);
+          router.push('/pages/viewSystemPage');
+          break;
+
       }
  
     }
@@ -136,7 +168,7 @@ export function DataTableRowActions<TData>({
       </Button> 
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" className="w-[160px]">
-      <DropdownMenuItem onClick={() => {setPage(row.id)}}>Edit</DropdownMenuItem>
+      <DropdownMenuItem onClick={() => {setPage(row.id)}}>View</DropdownMenuItem>
       <DropdownMenuItem>Make a copy</DropdownMenuItem>
       <DropdownMenuItem>Favorite</DropdownMenuItem>
       <DropdownMenuSeparator />

@@ -12,9 +12,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PostContext } from "@/provider/postProvider"
 import { useContext, useEffect } from "react"
+import { PageContext } from "@/provider/pageProvider"
+import { TabContextType } from "@/typing"
+import { BloggerContext } from "@/provider/BloggerProvider"
 
-export function PresetSave() {
+export function PresetSave( {page } : { page  : TabContextType}) {
   const postContext = useContext(PostContext);
+  const pageContext = useContext(PageContext);
+  const blogContext = useContext(BloggerContext);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -42,8 +48,18 @@ export function PresetSave() {
           <Button type="submit">Save</Button>
         </DialogFooter>
       </DialogContent>
-      <Button onClick={()=> postContext.ChangeObject(undefined,'submited',true)}>Publish</Button>
-
+      {(() => {
+        switch(page)
+      {
+        case 'Post':
+          return <><Button type="submit" onClick={()=> postContext.ChangeObject(undefined,'submited',1)}>Publish</Button></>
+        case 'Page':
+          return <><Button type="submit" onClick={()=> pageContext.changeSubmit(1)}>Publish</Button></>
+        case 'Blogger':
+          return <Button type="submit" onClick={()=> blogContext.changeSubmit(1)}>Publish</Button>
+        default :
+          return <Button type="submit" onClick={()=> postContext.ChangeObject(undefined,'submited',1)}>Publish</Button>
+      }})()}
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
           <DialogTitle>Save preset</DialogTitle>

@@ -2,10 +2,9 @@
 import { Metadata } from "next"
 import Image from "next/image"
 
-import { columnsTask, columnsCategory } from "./taskComponent/columns"
+import { columnsTask, columnsCategory, columnsBlogger } from "./taskComponent/columns"
 import {DataTable} from "./taskComponent/data-table"
-import { UserNav } from "./taskComponent/user-nav"
-import { DataDocList } from "@/typing"
+import { Blogger, BloggerTask, GetData } from "@/typing"
 import { Task , CategoryTab } from "@/typing"
 import { Button } from "@/components/ui/button"
 import {useRouter} from "next/navigation"
@@ -25,8 +24,8 @@ import { TabContext } from "@/provider/tabProvider"
 export default function TaskPage() {
   const tabType = useContext(TabContext);
   var doctype = 'Blog Post';
-  type field = keyof DataDocList
-  var fields : field[] = ['name', 'title', 'blog_category' , 'content_type', 'published']
+  type field = keyof GetData
+  var fields : field[] = []
   switch(tabType.variable)
   {
     case 'Categories':
@@ -37,36 +36,85 @@ export default function TaskPage() {
       doctype = 'Blog Post'
       fields = ['name', 'title', 'blog_category', 'content_type', 'published']
       break;
+    case 'Page':
+    doctype = 'BlogPage'
+    fields = ['name', 'title', 'content_type']
+    break;
+    case 'Blogger':
+    doctype = 'Blogger'
+    fields = ['name', 'full_name', 'avatar', 'bio', 'disabled', 'short_name']
+    break;
+    case 'SystemPage':
+    doctype = 'SystemPage'
+    fields = ['name', 'content_json', 'content_type', 'published', 'meta_image', 'title']
+
+
   }
-  let {data , isLoading, mutate, error} = useFrappeGetDocList<DataDocList>(doctype,{ fields: fields });
+  let {data , isLoading, mutate, error} = useFrappeGetDocList<GetData>(doctype,{ fields: fields });
   let tasks : any = [];
   if (data) {
-    if (tabType.variable == 'Categories')
-    {
-      tasks = data.reduce((acc: CategoryTab [], item) => {
-        acc.push({ 
-          id: item.name,
-          title: item.title,
-          status: item.published == 1 ? "Published" : "Drafted",
-        });
-        return acc;
-      }, []);
-    }else{
-      tasks = data.reduce((acc: Task [], item) => {
-        acc.push({ 
-          id: item.name,
-          title: item.title,
-          status: item.published == 1 ? "Published" : "Drafted",
-          contentType: item.content_type,
-        });
-        return acc;
-      }, []);
+    switch(tabType.variable) {
+      case 'Categories':
+        tasks = data.reduce((acc: CategoryTab [], item) => {
+          acc.push({ 
+            id: item.name,
+            title: item.title,
+            status: item.published == 1 ? "Published" : "Drafted",
+          });
+          return acc;
+        }, []);
+        break;
+      case 'Post':
+        tasks = data.reduce((acc: Task [], item) => {
+          acc.push({ 
+            id: item.name,
+            title: item.title,
+            status: item.published == 1 ? "Published" : "Drafted",
+            contentType: item.content_type,
+          });
+          return acc;
+        }, []);
+        break;
+      case 'Blogger':
+        tasks = data.reduce((acc: BloggerTask [], item) => {
+          acc.push({ 
+            id: item.name,
+            name: item.full_name,
+            avatar : item.avatar,
+            status: !item.disabled,
+          });
+          return acc;
+        }, []);
+        break;
+      case 'SystemPage':
+        tasks = data.reduce((acc: Task [], item) => {
+          acc.push({ 
+            id: item.name,
+            title: item.title,
+            status: item.published == 1 ? "Published" : "Drafted",
+            contentType: item.content_type,
+          });
+          return acc;
+        }, []);
+        break;
+      default:
+        tasks = data.reduce((acc: Task [], item) => {
+          acc.push({ 
+            id: item.name,
+            title: item.title,
+            status: "Published",   
+            contentType: item.content_type,
+          });
+          return acc;
+        }, []);
+        break;
     }
   }
   const router = useRouter()
   const {toast} = useToast()
 
   useEffect(() => {
+    mutate()
     if (error) {
       toast({title:'Eroor : error while fetching the blogs'})
     }
@@ -95,10 +143,23 @@ export default function TaskPage() {
             <h2 className="text-2xl font-bold tracking-tight">Blog {tabType.variable}</h2>
           </div>
           <div className="flex items-center space-x-2">
-            <UserNav />
           </div>
         </div>
-        {isLoading ? <TabSkeleton/>: ( tabType.variable == 'Categories' ? <DataTable data={tasks} columns={columnsCategory} currentTab={tabType.variable}/> : <DataTable data={tasks} columns={columnsTask} currentTab={tabType.variable}/> )}
+        {isLoading ? <TabSkeleton/> : (() => {
+          switch(tabType.variable)
+          {
+            case "Categories":
+              return <DataTable data={tasks} columns={columnsCategory} currentTab={tabType.variable}/>
+              break;
+            case "Blogger":
+              return <DataTable data={tasks} columns={columnsBlogger} currentTab={tabType.variable}/>
+              break;
+            default :
+               return <DataTable data={tasks} columns={columnsTask} currentTab={tabType.variable}/>
+              break;
+          }
+        })()
+        }
         <div className="flex items-center space-x-2" >
         <Button onClick={() => {router.push(`/pages/new${tabType.variable}`)}}>Add</Button>
         </div>

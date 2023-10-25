@@ -34,6 +34,9 @@ import { useContext } from "react"
 import { TabContext } from "@/provider/tabProvider"
 import { PostContext } from "@/provider/postProvider"
 import { TypeContext } from "@/provider/typeProvider"
+import { PageContext } from "@/provider/pageProvider"
+import { BloggerContext } from "@/provider/BloggerProvider"
+import { SystemPageContext } from "@/provider/SystemPageProvider"
 
 interface DataTableProps<TData, TValue> {
   columns: (ColumnDef<TData, TValue>)[]
@@ -48,6 +51,9 @@ export function DataTable<TData, TValue>({
   const tabType = useContext(TabContext);
   const postContext = useContext(PostContext)
   const typeContext = useContext(TypeContext)
+  const pageContext = useContext(PageContext)
+  const blogContext = useContext(BloggerContext)
+  const sysContext = useContext(SystemPageContext)
   const router = useRouter()
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -62,14 +68,27 @@ export function DataTable<TData, TValue>({
     {
       let id = goView.match(/\d+/g)?.join('');
       if(id){
-     
-        if(tabType.variable == 'Categories')
-        {
-          typeContext.ChangeVariable(id)
-          router.push('/pages/editCategory')
-        }else {
-          postContext.ChangeVariable(id)
-          router.push('/pages/viewBlog')
+        switch(tabType.variable) {
+          case 'Categories':
+            typeContext.ChangeVariable(id);
+            router.push('/pages/editCategory');
+            break;
+          case 'Post':
+            postContext.ChangeVariable(id);
+            router.push('/pages/editBlog');
+            break;
+          case 'Page':
+            pageContext.changeVariable(id);
+            router.push('/pages/editPage');
+            break;
+          case 'Blogger':
+            blogContext.changeVariable(id);
+            router.push('/pages/editBlogger');
+            break;
+          case 'SystemPage':
+            sysContext.changeVariable(id);
+            router.push('/pages/editSystemPage');
+            break;
         }
       }
     }
@@ -83,6 +102,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnFilters,
     },
+    autoResetPageIndex : true,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,

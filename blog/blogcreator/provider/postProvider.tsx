@@ -6,6 +6,7 @@ const PostContext = createContext<contextPost>({} as contextPost);
 
 
 import { useFrappeGetDocList} from 'frappe-react-sdk'
+import { useEditorChange } from "@blocknote/react";
 
 
 // Créez le fournisseur de contexte
@@ -25,16 +26,13 @@ const PostProvider = ({children} : {children : any}) => {
       } else if (property && value) {
         setMyObject(prevObject => ({ ...prevObject,[property]: value }));
       }
-      console.log(object)
     };
     
-
-    var {data : dataList ,isLoading} = useFrappeGetDocList<DataDocList>('Blog Post',{fields : [ 'content_type',
+    var {data : dataList , mutate} = useFrappeGetDocList<DataDocList>('Blog Post',{fields : [ 'content_type',
     'name',
     'published',
     'title',
-    'blog_category', 'content_json', 'blogger']} )
-
+    'blog_category', 'content_json', 'blogger','published_on','meta_image']} )
     useEffect(() => {
       if(dataList)
       {
@@ -46,7 +44,9 @@ const PostProvider = ({children} : {children : any}) => {
       }
     },[dataList,myVariable])
 
- 
+    useEffect(()=> {
+      mutate()
+    },[object.submited])
   
 
 

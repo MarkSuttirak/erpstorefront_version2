@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useFrappeCreateDoc, useFrappeFileUpload } from 'frappe-react-sdk';
 import { Button } from '@/components/ui/button';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
-import { PostContext } from "@/provider/postProvider"
+import { PageContext } from "@/provider/pageProvider"
 import React , { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 
@@ -39,86 +39,42 @@ var Contents =  [{
     "children": []
 }]
 
-const NewBlog = ({page =false} : {page? : boolean}) => {
+const NewPage = ({page =false} : {page? : boolean}) => {
     const [blocks, setBlocks] = useState<any>()
     const { createDoc, isCompleted, loading : isLoading } = useFrappeCreateDoc();
-    const postContext = useContext(PostContext);
-    const [file, setFile] = useState<File>()
-    const {upload,progress, loading} = useFrappeFileUpload()
-    const [url , setUrl] = useState('')
+    const pageContext = useContext(PageContext);
     const router = useRouter()
 
     useEffect(() => {
-        if(url != '' && postContext.update.submited == 1 )
+        if(isCompleted && pageContext.update== 1)
         {
-            formik.setFieldValue('meta_image',url);
-            formik.handleSubmit()
-        }
-    },[url])
-
-    useEffect(() => {
-        if(isCompleted && postContext.update.submited == 1)
-        {
-            postContext.ChangeObject(undefined,'submited', 2)
+            pageContext.changeSubmit(2)
             router.push('/pages/blog')
         }
     },[isCompleted])
 
     useEffect(() =>{
-        if(postContext.update.category)
+    
+        if(pageContext.update  == 1)
         {
-            formik.setFieldValue('blog_category', postContext.update.category)
+            formik.handleSubmit()
+
         }
-        if(postContext.update.writer)
-        {
-            formik.setFieldValue('blogger', postContext.update.writer)
-        }
-        if(postContext.update.publish_date)
-        {
-            formik.setFieldValue('published_on', postContext.update.publish_date)
-        }
-        if(postContext.update.image)
-        {
-            setFile(postContext.update.image)
-        }
-        if(postContext.update.submited  == 1)
-        {
-            if(file)
-            {
-                upload(file,{
-                    /** If the file access is private then set to TRUE (optional) */
-                    "isPrivate": false,
-                    "doctype" : "Blog Post",
-                    "docname" : blocks![0].content[0].text,
-                    "fieldname" : "meta_image"
-                  }).then((response) => {setUrl(response.file_url)})
-            }
-            else{
-                formik.handleSubmit()
-            }
-        }
-    },[postContext.update])
+    },[pageContext.update])
     const editor = useBlockNote({
         initialContent: Contents,
         onEditorContentChange: (editor) => setBlocks(editor.topLevelBlocks)
     });
     const formik = useFormik({
         initialValues: {
-            blog_category: "",
-            blogger: "",
             content_type: "JSON",
             content_json: {} as JSON,
-            content: "",
-            published_on : undefined,
-            meta_image : ""
 
         },
-        onSubmit: (values) => createDoc("Blog Post", {
+        onSubmit: (values) => createDoc("BlogPage", {
             ...values,
             title: blocks![0].content[0].text,
-            content_type: "JSON",
             content_json: { blocks },
-            content: "",
         }),
     });
 
@@ -131,4 +87,4 @@ const NewBlog = ({page =false} : {page? : boolean}) => {
     );
 }
 
-export default NewBlog
+export default NewPage

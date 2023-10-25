@@ -14,6 +14,12 @@ import { useContext, useEffect } from "react"
 export default function FileSelection ({mode} : {mode : string} ) {
     const [preview, setPreview] = useState<string | null>(null);
     const postContext = useContext(PostContext);
+    useEffect(() => {
+      if (postContext.data?.meta_image && !preview && mode != 'new')
+      {
+        setPreview('https://dev.zaviago.com' + postContext.data.meta_image)
+      }
+    })
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {

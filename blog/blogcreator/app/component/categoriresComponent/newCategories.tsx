@@ -22,7 +22,7 @@ export default function NewCategory()
             name: values.title,
             title: values.title,
             published: values.published,
-        }).then(() => {router.push('pages/blog')}),
+        }).then(() => {router.push('/pages/blog')}),
     })
     
 

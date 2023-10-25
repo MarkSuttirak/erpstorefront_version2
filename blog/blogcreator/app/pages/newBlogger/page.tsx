@@ -1,10 +1,10 @@
 import PlaygroundPage from "../../component/playground"
 import { Suspense } from "react"
 
-export default function NewBlog () {
+export default function NewBlogger () {
     return(
         <Suspense fallback={'Loading...'}>
-        <PlaygroundPage state={'view'} page={'Post'}></PlaygroundPage>
+        <PlaygroundPage state={'new'} page={'Blogger'}></PlaygroundPage>
         </Suspense>
     )
 }

@@ -41,7 +41,15 @@ export function WriterSelector({mode} : {mode : string} ) {
   'full_name'
    ]} )
    useEffect(() => {
-    if(selectedModel)
+    if(postContext.data?.blogger && !selectedModel && mode != 'new' )
+    {
+      let newdata = data?.filter((item) => item.name === postContext.data?.blogger)
+      if(newdata)
+      {
+        setSelectedModel(newdata[0])
+      }
+    }
+    if(selectedModel  )
     {
       postContext.ChangeObject(undefined,'writer',selectedModel?.name)
     }
@@ -72,7 +80,7 @@ export function WriterSelector({mode} : {mode : string} ) {
             aria-label="Select a model"
             className="w-full justify-between"
           >
-            {selectedModel ? selectedModel.full_name : "Select a model..."}
+            {selectedModel ? selectedModel.full_name : "Select a blogger..."}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>

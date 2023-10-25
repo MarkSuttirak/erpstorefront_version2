@@ -41,7 +41,14 @@ export function ModelSelector({mode} : {mode : string} ) {
    ]} )
   const postContext = useContext(PostContext);
   useEffect(() => {
-    setSelectedModel(postContext.data)
+    let newdata = data?.filter((item) => item.name === postContext.data?.blog_category)
+    if(newdata && mode != 'new' )
+    {
+      setSelectedModel(newdata[0])
+    }
+
+  }, [])
+  useEffect(() => {
     if(selectedModel)
     {
       postContext.ChangeObject(undefined,'category',selectedModel.name)

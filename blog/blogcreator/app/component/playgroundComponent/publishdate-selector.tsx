@@ -24,10 +24,19 @@ import { useContext, useEffect } from "react"
 export function DatePicker({mode} : {mode : string} ) {
   const [date, setDate] = React.useState<Date>()
   const postContext = useContext(PostContext);
+
+
+    
+  
+
   useEffect(() => {
+    if(postContext.data?.published_on && !date && mode != 'new')
+    {
+      setDate(new Date(postContext.data.published_on))
+    }
     if(date)
     {
-      let newDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+      let newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
       postContext.ChangeObject(undefined,'publish_date',newDate)
     }
   },[date])

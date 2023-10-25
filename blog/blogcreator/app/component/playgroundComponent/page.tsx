@@ -2,14 +2,13 @@ import React from 'react'
 import Composer from './composer';
 import { useContext } from 'react';
 import { PostContext } from '@/provider/postProvider';
+import { PageContext } from '@/provider/pageProvider';
 
 
-const Blog = ({page =false} : {page? : boolean}) => {
+const Page = ({page =false} : {page? : boolean}) => {
 
-    const postContext = useContext(PostContext)
-
-    let data = postContext.data
-
+    const pageContext = useContext(PageContext)
+    let data = pageContext.data
 
     if(data)
     {
@@ -20,4 +19,4 @@ const Blog = ({page =false} : {page? : boolean}) => {
  
 }
 
-export default Blog
+export default Page

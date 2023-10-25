@@ -35,12 +35,12 @@ export default function MusicPage() {
         />
       </div>
       <div className="hidden md:block">
-        <Menu />
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
-              <Sidebar playlists={playlists} className="hidden lg:block" />
+              <Sidebar className="hidden lg:block" />
               <div  className="col-span-3 lg:col-span-4 lg:border-l">
+              <Menu />
                 <div className="h-full px-4 py-6 lg:px-8">
                      <TaskPage ></TaskPage>      
                 </div>

@@ -10,7 +10,7 @@ export type UpdateObject = {
   image? : File,
   category : string,
   writer : string
-  submited : boolean
+  submited : number
 }
 
 import { z } from "zod"
@@ -52,6 +52,9 @@ string,
 blog_category : string,
 content_json : string,
 blogger : string,
+published_on? : string,
+meta_image? : string,
+
 }
 
 
@@ -59,7 +62,7 @@ export type Category = {
   name : string,
 }
 
-export type TabContextType = 'Post' | 'Categories' 
+export type TabContextType = 'Post' | 'Categories' | 'Page' | 'Blogger'|'SystemPage'
 
 export type contextTab = {
   variable : TabContextType;
@@ -99,4 +102,63 @@ export type contextType = {
 export type UserType = {
   name : string,
   full_name : string
+}
+
+
+export type Blogger = {
+  name : string,
+  full_name : string,
+  bio : string,
+  avatar : string,
+  disabled : boolean,
+  short_name : string,
+}
+
+export type BloggerTask = {
+  id : string,
+  name : string,
+  avatar : string,
+  status : boolean,
+}
+
+
+export type GetData = {
+  name : string,
+  full_name : string,
+  bio : string,
+  avatar : string,
+  disabled : boolean,
+  short_name : string,
+  content_type
+  : 
+  string,
+  published
+  : 
+  number,
+  title
+  : 
+  string,
+  blog_category : string,
+  content_json : string,
+  blogger : string,
+  published_on? : string,
+  meta_image? : string,
+}
+
+export type SystemPage = {
+  content_type
+: 
+string,
+name
+: 
+string,
+published
+: 
+number,
+title
+: 
+string,
+content_json : string,
+published_on? : string,
+meta_image? : string,
 }
