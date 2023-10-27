@@ -102,7 +102,7 @@ export const columnsTask: ColumnDef<(Task)>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row , table}) => <DataTableRowActions row={row} table={table}/>,
   },
 ]
 
@@ -173,7 +173,7 @@ export const columnsCategory: ColumnDef<(CategoryTab)>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row , table}) => <DataTableRowActions row={row} table={table}/>,
   },
 ]
 
@@ -184,7 +184,7 @@ export const columnsBlogger: ColumnDef<(Blogger)>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(value) => {table.toggleAllPageRowsSelected(!!value)}}
         aria-label="Select all"
         className="translate-y-[2px]"
       />
@@ -259,6 +259,6 @@ export const columnsBlogger: ColumnDef<(Blogger)>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row , table}) => <DataTableRowActions row={row} table={table}/>,
   },
 ]

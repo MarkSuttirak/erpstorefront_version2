@@ -1,9 +1,10 @@
 'use client'
 
+import React, { useContext } from "react";
+
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { TabContext } from "@/provider/tabProvider"
-import { useContext } from "react"
 import  PostIcon  from "@/public/PostIcon"
 import ZaviagoIcon from "@/public/zaviagoIcon"
 import DashIcon from "@/public/dashIcon"
@@ -15,8 +16,8 @@ import SearchIcon from "@/public/searchIcon"
 import Settingsicon from "@/public/settingsicon"
 import NotificationIcon from "@/public/notificationIcon"
 import Addicon from "@/public/addIcon"
-import PlayIcon from "@/public/playIcon"
 import { AnimationContext } from "@/provider/animationProvider"
+import { TabContext } from "@/provider/tabProvider";
 
 
 import {
@@ -28,25 +29,12 @@ import {
 } from "@/components/ui/select"
 
 
+export default function MainSideBar ({className} : {className? : string}) {
+    const animation = useContext(AnimationContext) 
+    const tab = useContext(TabContext)
 
-
-
-export function MainSidebar({ className}: {className? : string}) {
-  const tab = useContext(TabContext)
-  const animation = useContext(AnimationContext)
-
-
-  return (
-    <> 
-    <div className={cn('h-screen w-auto flex flex-column',className)}>
-        <div className="fixed top-0 left-0 w-[60px] h-screen border-r border-gray-300 z-10 bg-white" >
-            <div className="w-[60px] h-[162px] flex-shrink-0">
-              <div className="inline-flex px-[12px] py-[8px] flex-col items-start gap-[8px]"><button onClick={() =>animation.toggle('SideBar')} className="flex h-[36px] w-[36px]  p-[10px] items-center gap-[8px] rounded-md bg-blue-500 "><PlayIcon></PlayIcon></button></div>
-              <div className="inline-flex px-[12px] py-[8px] flex-col items-start gap-[8px]"><button className="flex h-[36px] w-[36px] p-[10px] items-center gap-[8px] rounded-md bg-purple-500 "><PlayIcon></PlayIcon></button></div>
-              <div className="inline-flex px-[12px] py-[8px] flex-col items-start gap-[8px]"><button className="flex h-[36px] w-[36px] p-[10px] items-center gap-[8px] rounded-md bg-yellow-400 "><PlayIcon></PlayIcon></button></div>
-            </div>
-        </div>
-        <div className={`nav-bar ${animation.sidebar ? 'open' : 'close'} h-screen border-r border-gray-300`}>
+    return (
+        <div className={cn(`main-bar ${animation.sidebar ? 'open' : 'close'} h-screen border-r border-gray-300`,className)}>
         <div className="space-y-4 py-4">
 
         <div className="inline-flex px-4 items-start gap-4 ">
@@ -182,11 +170,5 @@ export function MainSidebar({ className}: {className? : string}) {
         </div>
       </div>
         </div>
-    </div>
-    
-
-    
-     </>
-   
-  )
+    )
 }

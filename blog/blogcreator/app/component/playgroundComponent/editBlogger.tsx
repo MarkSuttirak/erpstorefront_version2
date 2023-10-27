@@ -23,19 +23,33 @@ export default function EditBlogger () {
     const { updateDoc, loading : docLoading, isCompleted } = useFrappeUpdateDoc()
     const {upload,progress, loading} = useFrappeFileUpload()
     const router = useRouter()
+    const [name,setName] = useState<string>()
+    const [bio, setBio] = useState<string>()
+    const [disabled, setDisabled] = useState<boolean>()
     const [url , setUrl] = useState('')
 
     const handleFile = (target : FileList | null) => {
         if(target)
         {
             setFile(target[0])
+            setUrl(URL.createObjectURL(target[0]))
         }
     }
+    useEffect(() => {
+        if (data)
+        {
+            setBio(data.bio)
+            setUrl(data.avatar)
+            setDisabled(data.disabled)
+            setName(data.full_name)
+
+        }
+    },[data])
 
     useEffect(() => {
         if(url != '' && bloggerContext.update == 1)
         {
-            formik.setFieldValue('meta_image',url);
+            formik.setFieldValue('avatar',url);
             formik.handleSubmit()
         }
     },[url])
@@ -57,9 +71,9 @@ export default function EditBlogger () {
                 upload(file,{
                     /** If the file access is private then set to TRUE (optional) */
                     "isPrivate": false,
-                    "doctype" : "Blog Blogger",
+                    "doctype" : "Blogger",
                     "docname" : data.name,
-                    "fieldname" : "meta_image"
+                    "fieldname" : "avatar"
                   }).then((response) => {setUrl(response.file_url)})
             }
             else{
@@ -77,7 +91,7 @@ export default function EditBlogger () {
         disabled : data?.disabled ?? false,
         short_name : data?.short_name ?? ''
         },
-        onSubmit: (values) => updateDoc("Blog Blogger", data.name , {
+        onSubmit: (values) => updateDoc("Blogger", data.name , {
             ...values,
         }).then(() => {}),
     })
@@ -89,20 +103,20 @@ export default function EditBlogger () {
                 <div className='flex h-full flex-col space-y-4 '>
                     <div className="flex flex-column gap-2 items-start ">
                         <label htmlFor="name">name</label>
-                        <input id='name' className="border rounded " type="text" value={data?.full_name} onChange={(e ) => formik.setFieldValue('full_name', e.target.value,  )}/>
+                        <input id='name' className="border rounded " type="text"  value={name} onChange={(e ) => {formik.setFieldValue('full_name', e.target.value  ) , setName(e.target.value)}}/>
                     </div>
                     <div>
                         <label htmlFor="bio">bio</label>
-                        <input id='bio' type='text' className="border rounded " value={data?.bio} onChange={(e ) => formik.setFieldValue('bio', e.target.value,  )}/>
+                        <input id='bio' type='text' className="border rounded " value={bio} onChange={(e ) => {formik.setFieldValue('bio', e.target.value), setBio(e.target.value ) }}/>
                     </div>
                     <div>
                         <label htmlFor="avatar">avatar</label>
-                        <input id='avatar' type='file' className="border rounded "  onChange={(e ) => handleFile(e.target.files)}/>
-                        {file && <img className="w-10 h-10" src={URL.createObjectURL(file)} alt="Selected File" />}
+                        <input id='avatar' type='file' className="border rounded " value='' onChange={(e ) => handleFile(e.target.files)}/>
+                        {url && <img className="w-10 h-10" src={`https://dev.zaviago.com${url}` } alt="Selected File" />}
                     </div>
                     <div>
-                        <label htmlFor="disbled">disabled</label>
-                        <Checkbox id='disabled'></Checkbox>
+                        <label htmlFor="disabled">disabled</label>
+                        <input id="diasabled" type='checkbox'   value={disabled ? 'true' : 'false'} onChange={(e) => {formik.setFieldValue('disabled', e.target.value), setDisabled(!disabled)}}></input>
                     </div>
 
                 </div>

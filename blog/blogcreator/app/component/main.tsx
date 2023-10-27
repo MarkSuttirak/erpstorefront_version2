@@ -1,10 +1,13 @@
 
+'use client'
 import { Metadata } from "next"
 import Image from "next/image"
 import { Menu } from "./mainComponent/menu"
-import { Sidebar } from "./mainComponent/sidebar"
-import { playlists } from "./mainData/playlists"
+import { MainSidebar } from "./mainComponent/sidebar"
+import { AnimationContext } from "@/provider/animationProvider"
 import TaskPage from "./task"
+import { useContext } from "react"
+import SideApp from "./mainComponent/sideApp"
 
 
 
@@ -14,7 +17,7 @@ export const metadata: Metadata = {
 } 
 
 export default function MusicPage() {
-  
+  const animation = useContext(AnimationContext)
 
   return (
     <>
@@ -37,9 +40,10 @@ export default function MusicPage() {
       <div className="hidden md:block">
         <div className="border-t">
           <div className="bg-background">
-            <div className="grid lg:grid-cols-5">
-              <Sidebar className="hidden lg:block" />
-              <div  className="col-span-3 lg:col-span-4 lg:border-l">
+            <div className="flex flex-column items-start">
+              <MainSidebar className="" />
+              <SideApp></SideApp>
+              <div  className={`main ${animation.sidebar ? 'open': ''} flex-grow`}>
               <Menu />
                 <div className="h-full px-4 py-6 lg:px-8">
                      <TaskPage ></TaskPage>      

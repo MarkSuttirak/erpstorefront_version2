@@ -18,6 +18,8 @@ import { useToast } from "@/components/ui/use-toast"
 import TabSkeleton from "../skeletonComponent/tabSkeleton"
 import { useContext } from "react"
 import { TabContext } from "@/provider/tabProvider"
+import { PlusCircle } from "lucide-react"
+import DeleteModal from "./taskComponent/deleteModal"
 
 
 
@@ -118,7 +120,7 @@ export default function TaskPage() {
     if (error) {
       toast({title:'Eroor : error while fetching the blogs'})
     }
-  },[error])
+  },[error, tabType.mutate])
   return (
     <>
       <div className="md:hidden">
@@ -144,6 +146,10 @@ export default function TaskPage() {
           </div>
           <div className="flex items-center space-x-2">
           </div>
+          <div className="flex flex-row gap-2">
+          {tabType.delete && <DeleteModal className="w-[160px] h-[40px]"></DeleteModal>}
+          <Button className="h-[40px] w-[160px]" onClick={() => {router.push(`/pages/new${tabType.variable}`)}}><PlusCircle className="w-[16px] h-[16px]" ></PlusCircle > <span className="pl-2" >New post</span></Button>
+          </div>
         </div>
         {isLoading ? <TabSkeleton/> : (() => {
           switch(tabType.variable)
@@ -160,9 +166,6 @@ export default function TaskPage() {
           }
         })()
         }
-        <div className="flex items-center space-x-2" >
-        <Button onClick={() => {router.push(`/pages/new${tabType.variable}`)}}>Add</Button>
-        </div>
       </div>
     </>
   )

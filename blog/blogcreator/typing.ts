@@ -65,6 +65,13 @@ export type Category = {
 export type TabContextType = 'Post' | 'Categories' | 'Page' | 'Blogger'|'SystemPage'
 
 export type contextTab = {
+  mutate: boolean,
+  toggleMutate: () => void,
+  rows: string[],
+  addRow: (value: string) => void,
+  suppRow: (value: string) => void,
+  delete : boolean,
+  setDelete : (value : boolean) => void,
   variable : TabContextType;
   ChangeVariable : (newValue: TabContextType) => void;
 }

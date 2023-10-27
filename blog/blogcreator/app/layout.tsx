@@ -10,6 +10,7 @@ import { TypeProvider } from '@/provider/typeProvider';
 import {PageProvider} from '@/provider/pageProvider';
 import {BloggerProvider} from '@/provider/BloggerProvider';
 import { SystemPageProvider } from '@/provider/SystemPageProvider';
+import { AnimationProvider } from '@/provider/animationProvider';
 
 
 
@@ -27,6 +28,7 @@ export default function RootLayout({
       useToken: true,
       token: () => `2ad3412e27b5c61:1cf86d7f8a8a367`
     }}>
+      <AnimationProvider>
       <SystemPageProvider>
       <BloggerProvider>
       <PostProvider>
@@ -43,6 +45,7 @@ export default function RootLayout({
       </PostProvider>
       </BloggerProvider>
       </SystemPageProvider>
+      </AnimationProvider>
     </FrappeProvider>
   )
 }

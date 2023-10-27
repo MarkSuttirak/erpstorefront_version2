@@ -77,36 +77,66 @@
 
 
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 200px 1fr; /* Deux colonnes, la première de 200px, la seconde en expansion */
-  grid-template-rows: 1fr auto; /* Deux rangées, la première en expansion, la seconde avec une hauteur automatique */
-  grid-gap: 20px; /* Espace entre les éléments */
-  height: 100vh; /* Hauteur de la grille pour occuper tout l'écran vertical */
-}
 
-/* Styles pour les éléments de la grille */
-.dashboard {
-  grid-column: 1 / 2; /* Colonne 1 */
-  grid-row: 1 / 3; /* De la rangée 1 à la rangée 3 */
-  background-color: lightgray;
-  padding: 10px;
-}
-
-.table {
-  grid-column: 2 / 3; /* Colonne 2 */
-  grid-row: 1 / 2; /* Rangée 1 */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: -240px; /* Masquer la barre latérale en dehors de l'écran */
+  width: 300px;
+  height: 100vh;
+  transition: all 0.3s ease-in-out; /* Ajouter une transition fluide */
   background-color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center; /* Centre verticalement */
-  height: 100vh; /* Hauteur de 100 % de la hauteur de la fenêtre, pour le centrage vertical */
 }
 
-.edit-button {
-  grid-column: 2 / 3; /* Colonne 2 */
-  grid-row: 2 / 3; /* Rangée 2 */
-  text-align: center;
-  padding: 10px;
+.nav-bar.open{
+  left: 60px; /* Masquer la barre latérale en dehors de l'écran */
+}
+
+
+.main{
+  padding-left: 60px;
+  transition: all 0.3s ease-in-out; /* Ajouter une transition fluide */
+}
+
+
+.main.open{
+  padding-left: 360px;
+}
+
+.sideApp{
+  position: fixed;
+  top: 0;
+  left: -384px; /* Masquer la barre latérale en dehors de l'écran */
+  width: 384px;
+  height: 100vh;
+  transition: all 0.3s ease-in-out; /* Ajouter une transition fluide */
+  background-color: white;
+  z-index: 99999;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
+}
+
+.sideApp.open{
+  left: 0; /* Masquer la barre latérale en dehors de l'écran */
+}
+
+.main-bar {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Masquer la barre latérale en dehors de l'écran */
+  width: 300px;
+  height: 100vh;
+  transition: all 0.3s ease-in-out; /* Ajouter une transition fluide */
+  background-color: white;
+}
+
+.main-bar.open{
+  left: 0px; /* Masquer la barre latérale en dehors de l'écran */
+}
+
+.sidebarRight{
+
+}
+
+.sidebarRight.open{
+
 }
