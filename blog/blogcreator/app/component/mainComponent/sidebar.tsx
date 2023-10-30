@@ -38,7 +38,7 @@ export function MainSidebar({ className}: {className? : string}) {
 
   return (
     <> 
-    <div className={cn('h-screen w-auto flex flex-column',className)}>
+    <div className={cn(className, 'h-screen w-auto flex flex-column')}>
         <div className="fixed top-0 left-0 w-[60px] h-screen border-r border-gray-300 z-10 bg-white" >
             <div className="w-[60px] h-[162px] flex-shrink-0">
               <div className="inline-flex px-[12px] py-[8px] flex-col items-start gap-[8px]"><button onClick={() =>animation.toggle('SideBar')} className="flex h-[36px] w-[36px]  p-[10px] items-center gap-[8px] rounded-md bg-blue-500 "><PlayIcon></PlayIcon></button></div>

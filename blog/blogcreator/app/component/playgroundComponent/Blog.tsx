@@ -7,7 +7,6 @@ import { PostContext } from '@/provider/postProvider';
 const Blog = ({page =false} : {page? : boolean}) => {
 
     const postContext = useContext(PostContext)
-
     let data = postContext.data
 
 

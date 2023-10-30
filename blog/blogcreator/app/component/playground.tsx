@@ -36,8 +36,10 @@ import MainSideBar from "./playgroundComponent/mainsidebar"
 import { ChevronLeft, ChevronRight, MessageSquare } from "lucide-react"
 import { TabContext } from "@/provider/tabProvider"
 import { Button } from "@/components/ui/button"
-import { ArrowRightToLine } from "lucide-react"
+import { ArrowRightToLine, ArrowLeftToLine } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import ItemSideBar from "./playgroundComponent/itemSidebar"
+import { AnimationContext } from "@/provider/animationProvider"
 
 
 
@@ -55,6 +57,7 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
   const pageContext = useContext(PageContext)
   const systemPageContext = useContext(SystemPageContext)
   const [animation , SetAnimation] = useState(false)
+  const animationContext = useContext(AnimationContext)
 
   const handleClick = () => {
     switch(page)
@@ -94,7 +97,8 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
       </div>
       <div className="hidden w-screen h-screen flex-row md:flex">
 
-        <Sidebar className="flex flex-col w-[266px] h-screen pt-[6px]  pb-[16px]  items-start gap-[16px] self-stretch border-r border-solid border-gray-200 bg-white"></Sidebar>
+        <Sidebar className="flex flex-col w-[300px] h-screen pt-[6px]  pb-[16px]  items-start gap-[16px] self-stretch border-r border-solid border-gray-200 bg-white z-10"></Sidebar>
+        <ItemSideBar/>
         <MainSideBar></MainSideBar>
         <div className="flex flex-col pb-0 items-center flex-1 self-stretch h-screen w-full">
           <Header className="flex h-[52px] px-[16px] justify-between items-center self-stretch border-b border-[#E4E4E7]"></Header>
@@ -104,21 +108,21 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
               (
               <>
                 <ChevronLeft className="w-4 h-4 stroke-1"/>
-                <span>{tab.variable}</span>
-                <Avatar>
+                <span className="text-black font-Inter text-[18px] font-semibold leading-[28px]">{tab.variable}</span>
+                <Avatar className="w-[35px] h-[35px]">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <span>Name</span>
-                <span>Last Updated : time</span>
-                <Button variant={'outline'}><MessageSquare></MessageSquare>Comment</Button>
-                <Button className="px-[16px] py-[8px]" variant={'secondary'} onClick={() => SetAnimation(!animation)} ><ArrowRightToLine className="w-4 h-4 stroke-1"></ArrowRightToLine> Info</Button>
+                <span className="text-[#09090B] font-Inter text-[14px] font-medium leading-[20px]">Name</span>
+                <span className="text-[#71717A] font-Inter text-[13px] font-normal leading-[20px]">Last Updated : </span><span className="text-[#71717A] font-Inter text-[13px] font-bold leading-[20px]">time</span>
+                <Button className="flex px-[16px] py-[8px] justify-center items-center gap-[8px]" variant={'outline'}><MessageSquare className="w-[16px] h-[16px] stroke-1"></MessageSquare><span className="text-[#18181B] font-Inter text-[14px] font-medium leading-[20px]">Comment</span></Button>
+                <Button className="px-[16px] py-[8px]" variant={'secondary'} onClick={() => SetAnimation(!animation)} ><ArrowLeftToLine className="w-4 h-4 stroke-1"></ArrowLeftToLine></Button>
               </>
              
                ) : (
                 <>
                 <ChevronRight className="w-4 h-4 stroke-1"/>
-                <span>{tab.variable}</span>
+                <span className="text-black font-Inter text-[18px] font-semibold leading-[28px]">{tab.variable}</span>
                 <Button className="px-[16px] py-[8px]" variant={'secondary'} onClick={() => SetAnimation(!animation)} ><ArrowRightToLine className="w-4 h-4 stroke-1"></ArrowRightToLine> Info</Button>
               </>
                )}
@@ -128,13 +132,8 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
               {state != 'view' ? <PresetSave page={page} /> : null}
             </div>
           </div>
-          <Tabs defaultValue="complete" className="">
-            <div className="">
-              <div className="">
-                <div className="">
-                  <SideBarRight state={state}/>
-                </div>
-                <div className="">
+          <Tabs defaultValue="complete" className={`editor flex w-full p-6 8 6 0 items-start flex-1 self-stretch ${animationContext.itemSideBar ? 'open' : ''}`}>
+            <SideBarRight state={state}/>
                   <div className="">
                       {(() => {
                         switch(page)
@@ -185,9 +184,6 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
                           }
                         }
                       })()}
-                  </div>
-                </div>
-              </div>
             </div>
           </Tabs>
         </div>

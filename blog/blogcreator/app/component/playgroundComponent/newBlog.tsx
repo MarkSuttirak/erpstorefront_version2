@@ -1,8 +1,6 @@
-import { BlockNoteView, useBlockNote} from '@blocknote/react';
+import Composer from './composer';
 import { useFormik } from 'formik';
 import { useFrappeCreateDoc, useFrappeFileUpload } from 'frappe-react-sdk';
-import { Button } from '@/components/ui/button';
-import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
 import { PostContext } from "@/provider/postProvider"
 import React , { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
@@ -98,10 +96,6 @@ const NewBlog = ({page =false} : {page? : boolean}) => {
             }
         }
     },[postContext.update])
-    const editor = useBlockNote({
-        initialContent: Contents,
-        onEditorContentChange: (editor) => setBlocks(editor.topLevelBlocks)
-    });
     const formik = useFormik({
         initialValues: {
             blog_category: "",
@@ -123,9 +117,9 @@ const NewBlog = ({page =false} : {page? : boolean}) => {
     });
 
     return (
-        <form className="flex h-full flex-col space-y-4" onSubmit={formik.handleSubmit}>
-            <div className="min-h-[400px] flex-1 p-4 md:min-h-[700px] rounded-md lg:min-h-[700px] " >
-            <BlockNoteView  editor={editor} />
+        <form className="flex flex-1 flex-col space-y-4" onSubmit={formik.handleSubmit}>
+            <div className="h-screen w-screen flex-1 p-4  rounded-md " >
+            <Composer value={Contents} onChange={(value: any) => formik.setFieldValue("content_json", { blocks: value })}></Composer>
             </div>
         </form>
     );

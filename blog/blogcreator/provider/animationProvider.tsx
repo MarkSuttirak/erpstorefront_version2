@@ -2,12 +2,13 @@ import React, {useState, useEffect, createContext} from "react"
 
 type AnimationType = {
    sidebarRight : boolean,
-   sidebar : boolean;
-   sideApp : boolean
-   toggle  : (value : objectAnimation) => void;
+   sidebar : boolean,
+   sideApp : boolean,
+   itemSideBar : boolean,
+   toggle  : (value : objectAnimation) => void,
 }
 
-type objectAnimation = 'SideBar' | 'SideApp' | 'SideBarRight'
+type objectAnimation = 'SideBar' | 'SideApp' | 'SideBarRight' | 'ItemSideBar'
 
 const AnimationContext = createContext<AnimationType>({} as AnimationType)
 
@@ -15,6 +16,7 @@ const AnimationProvider = ({children} : {children : any}) => {
     const [SideBarRight, setSideBarRight] = useState<boolean>(false)
     const [Sidebar, setSidebar] = useState<boolean>(false)
     const [SideApp, setSideApp] = useState<boolean>(false)
+    const [ItemSideBar, setItemSideBar] = useState<boolean>(false)
 
     const toggle = (value : objectAnimation) => {
         switch(value)
@@ -28,7 +30,9 @@ const AnimationProvider = ({children} : {children : any}) => {
             case 'SideBarRight':
                 setSideBarRight(!SideBarRight)
                 break;
-
+            case 'ItemSideBar':
+                setItemSideBar(!ItemSideBar)
+                break;
         }
     }
 
@@ -36,6 +40,7 @@ const AnimationProvider = ({children} : {children : any}) => {
         sidebarRight : SideBarRight,
         sidebar : Sidebar,
         sideApp : SideApp,
+        itemSideBar : ItemSideBar,
         toggle : toggle
     }
 

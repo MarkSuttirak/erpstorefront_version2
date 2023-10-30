@@ -9,7 +9,7 @@ import {
   } from "@/components/ui/select"
   import ZaviagoIcon from "@/public/zaviagoIcon";
   import { Button } from "@/components/ui/button";
-  import { Search } from "lucide-react";
+  import { ChevronLeft, Search } from "lucide-react";
   import { PlusCircle } from "lucide-react";
 import { AnimationContext } from "@/provider/animationProvider";
 import { Toggle } from "@/components/ui/toggle"
@@ -105,14 +105,14 @@ export default function Sidebar ({className} : {className ? : string}){
             <div className="flex flex-col p-2 gap-2 items-start self-stretch">
                 <h1 className="px-[16px] flex justify-center items-center text-[#797979] font-Inter font-semibold text-[14px] leading-[28px] tracking-wider">Elements</h1>
                 <div  className="flex flex-col items-start gap-[12px] self-stretch">
-                    <button className="flex h-[36px] py-2 px-4 justify-between items-center self-stretch rounded-md bg-white hover:bg-slate-50">
+                    <button className="flex h-[36px] py-2 px-4 justify-between items-center self-stretch rounded-md bg-white hover:bg-slate-50" onClick={() => animation.toggle('ItemSideBar')}>
                         <div className="flex items-center gap-2">
                             <div className="flex w-9 h-9 p-2.5 justify-between items-center rounded-md bg-[#F48] shadow-md hover:bg-black">
                                 <TextCursorInput className="h-4 w-4 stroke-1 text-white"></TextCursorInput>
                             </div>
                             <p className="text-[#09090B] font-Inter text-[13px] font-normal leading-[20px]">Text</p>
                         </div>
-                        <ChevronRight className="h-4 w-4 stroke-1"></ChevronRight>
+                        {animation.itemSideBar ? <ChevronLeft className="h-4 w-4 stroke-1"/> : <ChevronRight className="h-4 w-4 stroke-1"></ChevronRight>}
                     </button>
                     <button className="flex h-[36px] py-2 px-4 justify-between items-center self-stretch rounded-md bg-white hover:bg-slate-50">
                         <div className="flex items-center gap-2">
