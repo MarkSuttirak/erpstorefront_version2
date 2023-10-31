@@ -8,6 +8,7 @@ import { AnimationContext } from "@/provider/animationProvider"
 import TaskPage from "./task"
 import { useContext } from "react"
 import SideApp from "./mainComponent/sideApp"
+import Header from "./playgroundComponent/header"
 
 
 
@@ -44,7 +45,7 @@ export default function MusicPage() {
               <MainSidebar className="" />
               <SideApp></SideApp>
               <div  className={`main ${animation.sidebar ? 'open': ''} flex-grow`}>
-              <Menu />
+              <Header className="flex h-[52px] px-[16px] justify-between items-center self-stretch border-b border-[#E4E4E7]"/>
                 <div className="h-full px-4 py-6 lg:px-8">
                      <TaskPage ></TaskPage>      
                 </div>

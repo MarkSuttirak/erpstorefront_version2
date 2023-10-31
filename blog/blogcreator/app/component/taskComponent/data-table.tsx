@@ -37,16 +37,18 @@ import { TypeContext } from "@/provider/typeProvider"
 import { PageContext } from "@/provider/pageProvider"
 import { BloggerContext } from "@/provider/BloggerProvider"
 import { SystemPageContext } from "@/provider/SystemPageProvider"
+import { TabContextType } from "@/typing"
 
 interface DataTableProps<TData, TValue> {
   columns: (ColumnDef<TData, TValue>)[]
   data: TData[]
-  currentTab : string
+  currentTab : TabContextType
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  currentTab,
 }: DataTableProps<TData, TValue>) {
   const tabType = useContext(TabContext);
   const postContext = useContext(PostContext)
@@ -118,8 +120,9 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="space-y-4">
-      <DataTableToolbar table={table} />
+    <div className="space-y-4 w-full">
+      {currentTab != 'Overview' ? <DataTableToolbar table={table} /> : <h1 className="text-[#09090B] font-Inter text-[18px] font-semibold leading-[28px]"
+>Track your latest posts</h1>}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -172,7 +175,7 @@ export function DataTable<TData, TValue>({
           </Suspense>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {currentTab != 'Overview' && <DataTablePagination table={table} />}
     </div>
   )
 }

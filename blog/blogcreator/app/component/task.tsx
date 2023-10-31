@@ -18,8 +18,10 @@ import { useToast } from "@/components/ui/use-toast"
 import TabSkeleton from "../skeletonComponent/tabSkeleton"
 import { useContext } from "react"
 import { TabContext } from "@/provider/tabProvider"
-import { PlusCircle } from "lucide-react"
+import { ChevronDown, PlusCircle } from "lucide-react"
 import DeleteModal from "./taskComponent/deleteModal"
+import Overview from "./taskComponent/overview"
+import MoreActionsComponent from "./taskComponent/more-actions"
 
 
 
@@ -49,7 +51,12 @@ export default function TaskPage() {
     case 'SystemPage':
     doctype = 'SystemPage'
     fields = ['name', 'content_json', 'content_type', 'published', 'meta_image', 'title']
-
+    break;
+    case 'Overview':
+      doctype = 'Blog Post'
+      fields = ['name', 'title', 'blog_category', 'content_type', 'published']
+      break;
+      
 
   }
   let {data , isLoading, mutate, error} = useFrappeGetDocList<GetData>(doctype,{ fields: fields });
@@ -66,17 +73,6 @@ export default function TaskPage() {
           return acc;
         }, []);
         break;
-      case 'Post':
-        tasks = data.reduce((acc: Task [], item) => {
-          acc.push({ 
-            id: item.name,
-            title: item.title,
-            status: item.published == 1 ? "Published" : "Drafted",
-            contentType: item.content_type,
-          });
-          return acc;
-        }, []);
-        break;
       case 'Blogger':
         tasks = data.reduce((acc: BloggerTask [], item) => {
           acc.push({ 
@@ -88,7 +84,7 @@ export default function TaskPage() {
           return acc;
         }, []);
         break;
-      case 'SystemPage':
+      case 'Overview':
         tasks = data.reduce((acc: Task [], item) => {
           acc.push({ 
             id: item.name,
@@ -97,14 +93,15 @@ export default function TaskPage() {
             contentType: item.content_type,
           });
           return acc;
-        }, []);
+        }, []).slice(0, 3);
+        
         break;
       default:
         tasks = data.reduce((acc: Task [], item) => {
           acc.push({ 
             id: item.name,
             title: item.title,
-            status: "Published",   
+            status: item.published == 1 ? "Published" : "Drafted",
             contentType: item.content_type,
           });
           return acc;
@@ -139,16 +136,18 @@ export default function TaskPage() {
           className="hidden dark:block"
         />
       </div>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="flex h-full flex-1 flex-col gap-[24px] p-8  flex-wrap content-center">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Blog {tabType.variable}</h2>
+            {tabType.variable == 'Overview' && <p className="text-[#71717A] font-Inter text-[16px] font-normal leading-[24px]">Manage posts, track post performance and learn about new ways to improve your blog.</p>}
           </div>
           <div className="flex items-center space-x-2">
           </div>
           <div className="flex flex-row gap-2">
+          {tabType.variable == 'Overview' && <MoreActionsComponent></MoreActionsComponent>}
           {tabType.delete && <DeleteModal className="w-[160px] h-[40px]"></DeleteModal>}
-          <Button className="h-[40px] w-[160px]" onClick={() => {router.push(`/pages/new${tabType.variable}`)}}><PlusCircle className="w-[16px] h-[16px]" ></PlusCircle > <span className="pl-2" >New post</span></Button>
+          <Button className="h-[40px] w-[160px]" onClick={() => {router.push(`/pages/new${tabType.variable}`)}}><PlusCircle className="w-[16px] h-[16px]" ></PlusCircle > <span className="pl-2" >New {tabType.variable}</span></Button>
           </div>
         </div>
         {isLoading ? <TabSkeleton/> : (() => {
@@ -156,13 +155,16 @@ export default function TaskPage() {
           {
             case "Categories":
               return <DataTable data={tasks} columns={columnsCategory} currentTab={tabType.variable}/>
-              break;
+            
             case "Blogger":
               return <DataTable data={tasks} columns={columnsBlogger} currentTab={tabType.variable}/>
-              break;
+            
+            case "Overview":
+              return <Overview ><DataTable data={tasks} columns={columnsTask} currentTab={tabType.variable}/></Overview>
+            
             default :
                return <DataTable data={tasks} columns={columnsTask} currentTab={tabType.variable}/>
-              break;
+             
           }
         })()
         }

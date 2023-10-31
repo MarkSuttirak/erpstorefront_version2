@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 import { AnimationContext } from "@/provider/animationProvider";
 import DraggableHeading from "./items/dragHeading";
 import DragHorinzontalRule from "./items/dragHorizontalRule";
-
+import DragInput from "./items/dragInput";
+import PopOverDrag from "./items/popOverDrag";
 
 export default function ItemSideBar ({className} : {className ? : string}) {
     const animation = useContext(AnimationContext)
@@ -14,6 +15,8 @@ export default function ItemSideBar ({className} : {className ? : string}) {
                 <div className="flex justify-between items-start content-start gap-y-[8px] self-stretch flex-wrap">
                     <DraggableHeading></DraggableHeading>
                     <DragHorinzontalRule></DragHorinzontalRule>
+                    <DragInput/>
+                    <PopOverDrag/>
                 </div>
             </div>
         </div>

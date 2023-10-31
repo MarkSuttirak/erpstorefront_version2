@@ -145,6 +145,10 @@ export function MainSidebar({ className}: {className? : string}) {
           </div>
 
           <div className="flex flex-col items-start space-y-0.5 self-stretch">
+            <Button variant="ghost" onClick={() => {tab.ChangeVariable('Overview')}} className="flex h-9 py-2 px-4  justify-start items-center space-x-2 self-stretch">
+                <DashIcon></DashIcon>
+                <h2 className="text-gray-900 font-inter text-sm leading-5">Blog Overview</h2>   
+              </Button>
               <Button variant="ghost" onClick={() => {tab.ChangeVariable('Post')}} className="flex h-9 py-2 px-4  justify-start items-center space-x-2 self-stretch">
                 <PostIcon></PostIcon>
                 <h2 className="text-gray-900 font-inter text-sm leading-5">Post</h2>

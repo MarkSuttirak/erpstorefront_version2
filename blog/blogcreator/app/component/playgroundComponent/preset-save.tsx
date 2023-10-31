@@ -17,16 +17,18 @@ import { TabContextType } from "@/typing"
 import { BloggerContext } from "@/provider/BloggerProvider"
 import { PanelLeftClose, UploadCloud, PanelRightClose } from "lucide-react"
 import { AnimationContext } from "@/provider/animationProvider"
+import { useRouter } from "next/navigation"
 
 export function PresetSave( {page } : { page  : TabContextType}) {
   const postContext = useContext(PostContext);
   const pageContext = useContext(PageContext);
   const blogContext = useContext(BloggerContext);
   const animation = useContext(AnimationContext)
+  const router = useRouter()
 
   return (
     <div className="flex justify-center items-center gap-[8px]">
-      <Button variant={'ghost'}>Preview</Button>
+      <Button variant={'ghost'} onClick={() => router.push('/pages/preview')}>Preview</Button>
       <Dialog>
       <DialogTrigger asChild>
         <Button variant="secondary">Share</Button>

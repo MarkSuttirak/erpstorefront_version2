@@ -62,7 +62,7 @@ export type Category = {
   name : string,
 }
 
-export type TabContextType = 'Post' | 'Categories' | 'Page' | 'Blogger'|'SystemPage'
+export type TabContextType = 'Post' | 'Categories' | 'Page' | 'Blogger'|'SystemPage' |'Overview'
 
 export type contextTab = {
   mutate: boolean,
@@ -94,8 +94,15 @@ export type DataType = {
 }
 
 export type TypeContextType = string
+export type view = 'mobile' | 'tablet' | 'desktop'
 
 export type contextType = {
+  view : view,
+  changeView : (newvalue : view ) => void,
+  previousPage : string,
+  block : any,
+  changepage : (newvalue : string) => void,
+  changeBlock : (newvaue : any) => void,
   variable : TypeContextType;
   data : () => {
     data: DataType[];
