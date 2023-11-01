@@ -31,7 +31,7 @@ import {
 
 
 
-export function MainSidebar({ className}: {className? : string}) {
+export function SidebarMain({ className}: {className? : string}) {
   const tab = useContext(TabContext)
   const animation = useContext(AnimationContext)
 

@@ -1,10 +1,10 @@
-import CategoriesPlayground from "@/app/component/playgrountCategories"
+import PlaygroundPage from "@/app/component/playground"
 import { Suspense } from "react"
 
-export default function EditBlog () {
+export default function EditCategory () {
     return(
         <Suspense fallback={'Loading...'}>
-        <CategoriesPlayground state={'edit'}></CategoriesPlayground>
+        <PlaygroundPage state={'edit'} page={'Categories'}></PlaygroundPage >
         </Suspense>
     )
 }

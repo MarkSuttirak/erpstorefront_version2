@@ -3,7 +3,7 @@
 import { Metadata } from "next"
 import Image from "next/image"
 import { Menu } from "./mainComponent/menu"
-import { MainSidebar } from "./mainComponent/sidebar"
+import { SidebarMain } from "./mainComponent/sidebar"
 import { AnimationContext } from "@/provider/animationProvider"
 import TaskPage from "./task"
 import { useContext } from "react"
@@ -42,7 +42,7 @@ export default function MusicPage() {
         <div className="border-t">
           <div className="bg-background">
             <div className="flex flex-column items-start">
-              <MainSidebar className="" />
+              <SidebarMain className="" />
               <SideApp></SideApp>
               <div  className={`main ${animation.sidebar ? 'open': ''} flex-grow`}>
               <Header className="flex h-[52px] px-[16px] justify-between items-center self-stretch border-b border-[#E4E4E7]"/>

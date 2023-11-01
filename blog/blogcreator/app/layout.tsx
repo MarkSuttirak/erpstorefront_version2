@@ -11,6 +11,7 @@ import {PageProvider} from '@/provider/pageProvider';
 import {BloggerProvider} from '@/provider/BloggerProvider';
 import { SystemPageProvider } from '@/provider/SystemPageProvider';
 import { AnimationProvider } from '@/provider/animationProvider';
+import { CategoryProvider } from '@/provider/categoryProvider';
 
 
 
@@ -21,6 +22,7 @@ export default function RootLayout({
 }) 
 {
   return (
+    <>
     <FrappeProvider 
       url='https://dev.zaviago.com' 
       tokenParams={{
@@ -35,10 +37,12 @@ export default function RootLayout({
       <TypeProvider>
       <PageProvider>
       <TabProvider>
+      <CategoryProvider>
       <html lang="en">
         
         <body><Suspense fallback={<Loading />}>{children}<Toaster /></Suspense></body>
       </html>
+      </CategoryProvider> 
       </TabProvider>
       </PageProvider>
       </TypeProvider>
@@ -47,5 +51,6 @@ export default function RootLayout({
       </SystemPageProvider>
       </AnimationProvider>
     </FrappeProvider>
+    </>
   )
 }

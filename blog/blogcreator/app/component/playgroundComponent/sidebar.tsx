@@ -13,19 +13,19 @@ import {
   import { PlusCircle } from "lucide-react";
 import { AnimationContext } from "@/provider/animationProvider";
 import { Toggle } from "@/components/ui/toggle"
-import { PanelLeftClose } from "lucide-react";
+import { PanelRightClose } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { TextCursorInput } from "lucide-react";
 import { PlayCircle } from "lucide-react";
 import { BadgeCheck } from "lucide-react";
 import { Layout } from "lucide-react";
 import { LayoutGrid } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
 
 
-
+  
 export default function Sidebar ({className} : {className ? : string}){
     const animation = useContext(AnimationContext)
     return(
@@ -91,7 +91,7 @@ export default function Sidebar ({className} : {className ? : string}){
                     </div>
                     </SelectContent>
                     </Select>
-                    <Toggle className="flex w-[40px] h-[40px] min-w-[40px] p-2 justify-center items-center gap-1 self-stretch rounded-md bg-[#F4F4F5]  " onClick={() => animation.toggle('SideBar')}><PanelLeftClose className="h-[16px] w-[16px] flex-shrink stroke-1"/></Toggle>
+                    <Toggle className="flex w-[40px] h-[40px] min-w-[40px] p-2 justify-center items-center gap-1 self-stretch rounded-md bg-[#F4F4F5]  " onClick={() => animation.toggle('SideBar')}><PanelRightClose className="h-[16px] w-[16px] flex-shrink stroke-1"/></Toggle>
                 </div>
                 <div className="flex flex-col w-[266px] pl-[12px] pr-[12px] items-center">
                 <Tabs defaultValue="account" className="">

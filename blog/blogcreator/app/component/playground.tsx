@@ -40,7 +40,11 @@ import { ArrowRightToLine, ArrowLeftToLine } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import ItemSideBar from "./playgroundComponent/itemSidebar"
 import { AnimationContext } from "@/provider/animationProvider"
-
+import SideApp from "./mainComponent/sideApp"
+import { SidebarMain} from "./mainComponent/sidebar"
+import NewCategory from "./playgroundComponent/newCategories"
+import EditCategoy from "./playgroundComponent/editCategories"
+import Category from "./playgroundComponent/Category"
 
 
 export const metadata: Metadata = {
@@ -96,11 +100,17 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
         />
       </div>
       <div className="hidden w-screen h-screen flex-row md:flex">
-
+        {page == ('Categories' || 'Blogger') ? (<> 
+        <SidebarMain/>
+        <SideApp></SideApp>
+         </>) : 
+        (<>
+        <SideApp></SideApp>
         <Sidebar className="flex flex-col w-[300px] h-screen pt-[6px]  pb-[16px]  items-start gap-[16px] self-stretch border-r border-solid border-gray-200 bg-white z-10"></Sidebar>
         <ItemSideBar/>
         <MainSideBar></MainSideBar>
-        <div className="flex flex-col pb-0 items-center flex-1 self-stretch h-screen w-full">
+        </>)}
+        <div className={`${page == ('Categories' || 'Blogger') && 'main'} ${animationContext.sidebar ? 'open': ''} flex flex-col pb-0 items-center flex-1 self-stretch h-screen w-full`}>
           <Header className="flex h-[52px] px-[16px] justify-between items-center self-stretch border-b border-[#E4E4E7]"></Header>
           <div className="flex px-[32px] py-[16px] justify-between items-center self-stretch border-b border-[#E4E4E7] ">
             <div className="flex items-center gap-[5px]">
@@ -129,7 +139,7 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
               
             </div>
             <div className="">
-              {state != 'view' ? <PresetSave page={page} /> : null}
+              {state != 'view' ? <PresetSave page={page} /> : null }
             </div>
           </div>
           <Tabs defaultValue="complete" className={`editor flex w-full p-6 8 6 0 items-start flex-1 self-stretch ${animationContext.itemSideBar ? 'open' : ''}`}>
@@ -181,6 +191,17 @@ export default function PlaygroundPage({state, page} : {state : string, page : T
                               return <SystemPage/>;
                             default:
                               return null;
+                          }
+                        case 'Categories':
+                          switch (state){
+                            case 'edit':
+                              return < EditCategoy/>;
+                            case 'new':
+                              return < NewCategory />;
+                            case 'view':
+                              return <Category/>
+                            default:
+                                return null;
                           }
                         }
                       })()}

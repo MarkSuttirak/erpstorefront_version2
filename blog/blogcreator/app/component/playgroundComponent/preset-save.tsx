@@ -15,20 +15,23 @@ import { useContext, useEffect } from "react"
 import { PageContext } from "@/provider/pageProvider"
 import { TabContextType } from "@/typing"
 import { BloggerContext } from "@/provider/BloggerProvider"
-import { PanelLeftClose, UploadCloud, PanelRightClose } from "lucide-react"
+import { PanelLeftClose, UploadCloud, PanelRightClose, Trash2 } from "lucide-react"
 import { AnimationContext } from "@/provider/animationProvider"
 import { useRouter } from "next/navigation"
+import { CategoryContext } from "@/provider/categoryProvider"
 
 export function PresetSave( {page } : { page  : TabContextType}) {
   const postContext = useContext(PostContext);
   const pageContext = useContext(PageContext);
   const blogContext = useContext(BloggerContext);
+  const categoryContext = useContext(CategoryContext)
   const animation = useContext(AnimationContext)
   const router = useRouter()
 
   return (
     <div className="flex justify-center items-center gap-[8px]">
-      <Button variant={'ghost'} onClick={() => router.push('/pages/preview')}>Preview</Button>
+      {page == 'Blogger' || page == 'Categories' ? (<><Button className="flex gap-2" variant={'destructive'}><Trash2 className="w-4 h-4 stroke-1"></Trash2>Delete</Button></>)
+      : (<><Button variant={'ghost'} onClick={() => router.push('/pages/preview')}>Preview</Button>
       <Dialog>
       <DialogTrigger asChild>
         <Button variant="secondary">Share</Button>
@@ -55,7 +58,7 @@ export function PresetSave( {page } : { page  : TabContextType}) {
           <Button type="submit">Share</Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </Dialog></>)}
     {(() => {
         switch(page)
       {
@@ -65,10 +68,12 @@ export function PresetSave( {page } : { page  : TabContextType}) {
           return <><Button className="flex justify-center items-center gap-[5px]" type="submit" onClick={()=> pageContext.changeSubmit(1)}><UploadCloud className="w-[16px] h-[16px] stroke-1"/>Publish</Button></>
         case 'Blogger':
           return <Button className="flex justify-center items-center gap-[5px]" type="submit" onClick={()=> blogContext.changeSubmit(1)}><UploadCloud className="w-[16px] h-[16px] stroke-1"/>Publish</Button>
+        case 'Categories':
+          return <Button className="flex justify-center items-center gap-[5px]" type="submit" onClick={()=> categoryContext.changeSubmit(1)}><UploadCloud className="w-[16px] h-[16px] stroke-1"/>Publish</Button>
         default :
           return <Button className="flex justify-center items-center gap-[5px]" type="submit" onClick={()=> postContext.ChangeObject(undefined,'submited',1)}><UploadCloud className="w-[16px] h-[16px] stroke-1"/>Publish</Button>
       }})()}
-      <Button variant={'secondary'} onClick={() => animation.toggle('SideBarRight')}>{animation.sidebarRight ? <PanelRightClose className="w-[16px] h-[16px] stroke-1"/> : <PanelLeftClose className="w-[16px] h-[16px] stroke-1"/>}</Button>
+      {page != ('Blogger' ||  'Categories')   &&   <Button variant={'secondary'} onClick={() => animation.toggle('SideBarRight')}>{animation.sidebarRight ? <PanelRightClose className="w-[16px] h-[16px] stroke-1"/> : <PanelLeftClose className="w-[16px] h-[16px] stroke-1"/>}</Button>}
     </div>
   )
 }

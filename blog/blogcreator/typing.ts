@@ -58,9 +58,6 @@ meta_image? : string,
 }
 
 
-export type Category = {
-  name : string,
-}
 
 export type TabContextType = 'Post' | 'Categories' | 'Page' | 'Blogger'|'SystemPage' |'Overview'
 
@@ -87,11 +84,6 @@ export type contextPost = {
   ChangeVariable : (newValue: PostContextType) => void;
 }
 
-export type DataType = {
-  name : string,
-  title : string,
-  published : number,
-}
 
 export type TypeContextType = string
 export type view = 'mobile' | 'tablet' | 'desktop'
@@ -105,7 +97,7 @@ export type contextType = {
   changeBlock : (newvaue : any) => void,
   variable : TypeContextType;
   data : () => {
-    data: DataType[];
+    data: Category[];
     isLoading: boolean;
 };
   ChangeVariable : (newValue: TypeContextType) => void;
@@ -116,6 +108,15 @@ export type contextType = {
 export type UserType = {
   name : string,
   full_name : string
+}
+
+
+export type Category = {
+  name : string,
+  title : string,
+  description : string,
+  image : string,
+  published : boolean,
 }
 
 

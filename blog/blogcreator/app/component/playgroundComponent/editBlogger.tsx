@@ -1,32 +1,72 @@
 'use-client'
 import "@blocknote/core/style.css";
-import { useFrappeGetDoc, useFrappeUpdateDoc, useFrappeFileUpload } from 'frappe-react-sdk'
+import {useFrappeUpdateDoc} from 'frappe-react-sdk'
+import { Blogger } from "@/typing";
+import {useFrappeGetDocList, useFrappeCreateDoc, useFrappeFileUpload } from 'frappe-react-sdk'
 import React, { useEffect, useState } from 'react'
-import Composer from './composer'
-import { useFormik } from 'formik';
-import { Button } from '@/components/ui/button';
-import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { BloggerContext } from "@/provider/BloggerProvider";
-import { Blogger } from "@/typing";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form"
+  import { Input } from "@/components/ui/input";
+  import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+  import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+  } from "@/components/ui/command"
+  import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  } from "@/components/ui/popover"
+  import { Check, ChevronsUpDown } from "lucide-react"
+  import { Button } from "@/components/ui/button";
+  import { cn } from "@/lib/utils";
+  
+
+
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+ 
+const formSchema = z.object({
+    bio : z.string().min(0).max(50).default(''),
+    full_name :  z.string({
+        required_error: "Please select a User.",
+      }).min(2,{
+        message: "Please select a User.",
+      }).max(50), 
+    avatar : z.string().min(2).max(50).default(''),
+    disabled :  z.boolean().default(false),
+    short_name :  z.string().min(2).max(50).default(''),
+})
 
 
 
 
 
-export default function EditBlogger () {
+export default function NewBlogger () {
     const bloggerContext = useContext(BloggerContext)
     let data = bloggerContext.data? bloggerContext.data : {} as Blogger;
-    const [file, setFile] = useState<File>()
     const { updateDoc, loading : docLoading, isCompleted } = useFrappeUpdateDoc()
+    const [file, setFile] = useState<File>()
     const {upload,progress, loading} = useFrappeFileUpload()
     const router = useRouter()
-    const [name,setName] = useState<string>()
-    const [bio, setBio] = useState<string>()
-    const [disabled, setDisabled] = useState<boolean>()
     const [url , setUrl] = useState('')
+    const {data : Users} = useFrappeGetDocList('User', {fields : ['full_name'], filters : [['user_type', '=' , 'System User']],limit: 200})
+    const [open, setOpen] = React.useState(false)
 
     const handleFile = (target : FileList | null) => {
         if(target)
@@ -35,22 +75,13 @@ export default function EditBlogger () {
             setUrl(URL.createObjectURL(target[0]))
         }
     }
-    useEffect(() => {
-        if (data)
-        {
-            setBio(data.bio)
-            setUrl(data.avatar)
-            setDisabled(data.disabled)
-            setName(data.full_name)
-
-        }
-    },[data])
 
     useEffect(() => {
         if(url != '' && bloggerContext.update == 1)
         {
-            formik.setFieldValue('avatar',url);
-            formik.handleSubmit()
+            form.setValue('avatar',url);
+            form.handleSubmit(onSubmit)()
+    
         }
     },[url])
 
@@ -72,55 +103,133 @@ export default function EditBlogger () {
                     /** If the file access is private then set to TRUE (optional) */
                     "isPrivate": false,
                     "doctype" : "Blogger",
-                    "docname" : data.name,
+                    "docname" : form.getValues('short_name'),
                     "fieldname" : "avatar"
                   }).then((response) => {setUrl(response.file_url)})
             }
             else{
-                formik.handleSubmit()
+                form.handleSubmit(onSubmit)();
             }
         }
     },[bloggerContext.update])
 
-    const formik = useFormik<Blogger>({
-        initialValues: {
-        name :  data?.name ?? '',
-        full_name : data?.full_name ?? '',
-        bio : data?.bio ?? '',
-        avatar : data?.avatar ?? '',
-        disabled : data?.disabled ?? false,
-        short_name : data?.short_name ?? ''
-        },
-        onSubmit: (values) => updateDoc("Blogger", data.name , {
-            ...values,
-        }).then(() => {}),
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues : {
+            full_name : data?.full_name ?? "Writer Name",
+            bio : data?.bio ?? '',
+            disabled  : data?.disabled ?? false,
+            avatar : data?.avatar ?? '',
+            short_name : data?.short_name ?? '',
+        }
     })
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        updateDoc("Blogger", data.name,{
+            ...values,
+        })
+      }
 
     return (
         <>
-            {docLoading ? 'loading ...' :             
-            <form className="flex h-full flex-col space-y-4" onSubmit={formik.handleSubmit}>
-                <div className='flex h-full flex-col space-y-4 '>
-                    <div className="flex flex-column gap-2 items-start ">
-                        <label htmlFor="name">name</label>
-                        <input id='name' className="border rounded " type="text"  value={name} onChange={(e ) => {formik.setFieldValue('full_name', e.target.value  ) , setName(e.target.value)}}/>
-                    </div>
-                    <div>
-                        <label htmlFor="bio">bio</label>
-                        <input id='bio' type='text' className="border rounded " value={bio} onChange={(e ) => {formik.setFieldValue('bio', e.target.value), setBio(e.target.value ) }}/>
-                    </div>
-                    <div>
-                        <label htmlFor="avatar">avatar</label>
-                        <input id='avatar' type='file' className="border rounded " value='' onChange={(e ) => handleFile(e.target.files)}/>
-                        {url && <img className="w-10 h-10" src={`https://dev.zaviago.com${url}` } alt="Selected File" />}
-                    </div>
-                    <div>
-                        <label htmlFor="disabled">disabled</label>
-                        <input id="diasabled" type='checkbox'   value={disabled ? 'true' : 'false'} onChange={(e) => {formik.setFieldValue('disabled', e.target.value), setDisabled(!disabled)}}></input>
-                    </div>
-
-                </div>
-            </form>}
+            {docLoading ? 'loading ...' :
+             <Form {...form}>          
+                <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+                    <FormField
+                        control={form.control}
+                        name="avatar"
+                        render={({ field }) => (
+                            <FormItem className="w-[107px] h-[107px]">
+                            <FormLabel className="w-full h-full" htmlFor="avatar">
+                                <Avatar className="w-full h-full">
+                                    <AvatarImage src={field.value ?  `https://dev.zaviago.com${field.value}` : url} />
+                                    <AvatarFallback>{form.getValues('short_name') ? form.getValues('short_name') : 'CN'}</AvatarFallback>
+                                    <Input id="avatar" className="hidden" hidden={true} type='file' onChange={(e) => handleFile(e.target.files)} />
+                                </Avatar>
+                            </FormLabel>
+                            <FormControl>
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                        <h1 className="text-[#71717A] font-Inter text-[36px] font-extrabold leading-[40px] tracking[-0.9px]">{form.getValues('full_name')}</h1>
+                    <FormField
+                        control={form.control}
+                        name="bio"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Bio</FormLabel>
+                            <FormControl>
+                                <Textarea placeholder="write something about the writer." {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                You can @mention other users and organizations to link to them.
+                            </FormDescription>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                    <FormField
+                        control={form.control}
+                        name="full_name"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                            <FormLabel>Admin User</FormLabel>
+                                <Popover open={open} onOpenChange={setOpen}>
+                                <PopoverTrigger asChild>
+                                <FormControl>
+                                    <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    aria-expanded={open}
+                                    className={cn(
+                                        "w-full justify-between",
+                                        !field.value && "text-muted-foreground"
+                                      )}
+                                    >
+                                    {field.value != 'Writer Name'
+                                        ? field.value
+                                        : "Select Admin User in team..."}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-[200px] p-0">
+                                    <Command>
+                                        <CommandInput className="h-9" placeholder="Select Admin User in team..."/>                        
+                                            <CommandEmpty>No results found.</CommandEmpty>
+                                            <CommandGroup heading="System User" className="overflow-y-auto h-[200px]">
+                                                {Users && Users.map((user, index) => (
+                                                <CommandItem key={index} value={user.full_name} 
+                                                onSelect={() => {
+                                                    form.setValue('full_name', user.full_name)
+                                                    form.setValue('short_name', user.full_name)
+                                                    setOpen(false)
+                                                }}>{user.full_name}
+                                                    <Check
+                                                        className={cn(
+                                                            "ml-auto h-4 w-4",
+                                                            field.value === user.full_name ? "opacity-100" : "opacity-0"
+                                                        )}
+                                                        />
+                                                </CommandItem>
+                                                )
+                                                )}
+                                            </CommandGroup>
+                                    </Command>
+                                </PopoverContent>
+                                </Popover>
+                            <FormDescription>
+                                Select any admin user in team for writer.
+                            </FormDescription>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                </form>
+            </Form>  
+            
+            }
         
         </>
     );

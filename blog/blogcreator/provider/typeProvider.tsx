@@ -1,5 +1,5 @@
 'use client'
-import { TypeContextType, contextType, DataType, view } from "@/typing";
+import { TypeContextType, contextType, view, Category } from "@/typing";
 import { createContext, useState} from "react";
 
 const TypeContext = createContext<contextType>({} as contextType);
@@ -32,14 +32,17 @@ const TypeProvider = ({children} : {children : any}) => {
     };
 
     const getdata = () => {
-      var {data ,isLoading} = useFrappeGetDocList<DataType>('Blog Category',{fields : [ 'title',
+      var {data ,isLoading} = useFrappeGetDocList<Category>('Blog Category',{fields : [ 
+      'title',
       'name',
-       'published'
+      'published',
+      'image',
+      'description'
        ]} )
       if (data){
         return {data, isLoading}
       }else{
-        data = {} as DataType[];
+        data = {} as Category[];
         return {data, isLoading}
       }
  
