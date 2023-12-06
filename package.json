@@ -1,4 +1,14 @@
 {
+  "name": "erpstorefront_version2",
+  "version": "1.0.0",
+  "description": "erpstorefront_version2",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd erpnext_storefront_v2 && yarn install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd erpnext_storefront_v2 && yarn dev",
+    "build": "cd erpnext_storefront_v2 && yarn build "
+  },
   "dependencies": {
     "eslint-config-next": "^13.5.4",
     "next": "^13.5.4",
