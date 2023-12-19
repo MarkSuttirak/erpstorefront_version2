@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const TokenKey = 'token';
+const TokenKey = 'sid';
 
 const getToken = () => Cookies.get(TokenKey);
 

@@ -51,23 +51,19 @@ import BlogPage from "./pages/BlogPage";
 import SearchPage from "./pages/SearchPage";
 
 
-export default function App() {
-  const navigate = useNavigate();
+
+
+function App() {
+  /*const navigate = useNavigate();
+  const { currentUser } = useFrappeAuth();
   useEffect(() => {
-    if (!getToken() ) {
+    console.log(getToken());
+    if ( !getToken() && !currentUser ) {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, currentUser]);*/
 
   return (
-    <FrappeProvider 
-      enableSocket={false}
-      tokenParams={{
-        type: "token",
-        useToken: true,
-        token: getToken,
-      }}
-    >
       <UserProvider>
         <ProductsProvider>
           <CartProvider>
@@ -119,6 +115,22 @@ export default function App() {
           </CartProvider>
         </ProductsProvider>
       </UserProvider>
-    </FrappeProvider>
   )
 }
+
+export const AppWrapper = () => {
+  return (
+    <FrappeProvider 
+    enableSocket={false}
+    tokenParams={{
+      type: "token",
+      useToken: true,
+      token: getToken,
+    }}
+  >
+    <App />
+   </FrappeProvider>
+  )
+}
+
+export default AppWrapper;

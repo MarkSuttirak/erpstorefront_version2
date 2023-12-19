@@ -24,7 +24,9 @@ export const UserProvider = ({ children }) => {
     const login = async (usr, pwd) => {
         try {
                 return useLogin(usr, pwd).then((response) => response.json()).then((data) => {
+                    console.log(data)
                 if (data.message.token) {
+                    console.log(data.message.token)
                     // handle jwt
                     setToken(data.message.token);
                     // get user

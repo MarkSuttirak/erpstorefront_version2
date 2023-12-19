@@ -7,15 +7,16 @@ import { useUser } from '../hooks/useUser';
 import { getToken } from '../utils/helper';
 
 export default function Login() {
+  const {currentUser} = useFrappeAuth();
   const { login } = useUser();
   const navigate = useNavigate();
   const { isLoading } = useFrappeAuth();
 
   useEffect(() => {
-    if (getToken()) {
+    if (getToken() && currentUser) {
       navigate("/");
     }
-  }, [])
+  }, [getToken(), currentUser])
 
   const formik = useFormik({
     initialValues: {
