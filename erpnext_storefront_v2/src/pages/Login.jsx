@@ -19,8 +19,8 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      usr: 'umer2001.uf@gmail.com',
-      pwd: 'admintoor',
+      usr: 'Administrator',
+      pwd: 'root',
       // usr: 'suttirak.ch@zaviago.com',
       // pwd: 'CanDoNa12a3',
     },
@@ -32,7 +32,7 @@ export default function Login() {
       <h2 className="w-full typography-headline-4 md:typography-headline-3 font-bold">Sign in</h2>
       <label className="w-full flex flex-col gap-0.5">
         <span className="typography-text-sm  font-medium">usr/username</span>
-        <SfInput name="usr" type='email' autoComplete="usr" required onChange={formik.handleChange} value={formik.values.usr} />
+        <SfInput name="usr" type='text' autoComplete="usr" required onChange={formik.handleChange} value={formik.values.usr} />
       </label>
       <label className="w-full flex flex-col gap-0.5 flex flex-col gap-0.5">
         <span className="typography-text-sm font-medium">password</span>
