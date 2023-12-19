@@ -50,6 +50,7 @@ import CartPage from "./pages/checkout/CartPage";
 import BlogPage from "./pages/BlogPage";
 import SearchPage from "./pages/SearchPage";
 
+
 export default function App() {
   const navigate = useNavigate();
   useEffect(() => {

@@ -1,13 +1,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getToken, removeToken, setToken } from '../utils/helper';
 import { useNavigate } from 'react-router-dom';
-import { useFrappeGetCall } from 'frappe-react-sdk';
+import { useFrappeGetCall, useFrappeAuth } from 'frappe-react-sdk';
+
 
 const userContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const {login : useLogin} = useFrappeAuth()
 
 
 
@@ -21,16 +23,7 @@ export const UserProvider = ({ children }) => {
 
     const login = async (usr, pwd) => {
         try {
-            return fetch(`/api/method/frappeauth_app.authentication.login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    usr: usr,
-                    pwd: pwd,
-                }),
-            }).then((response) => response.json()).then((data) => {
+                return useLogin(usr, pwd).then((response) => response.json()).then((data) => {
                 if (data.message.token) {
                     // handle jwt
                     setToken(data.message.token);
