@@ -30,7 +30,7 @@ export default function Home(){
   const BlogCardDesktop = ({title, image, date, link, category, ratio}) => {
     return (
       <Link to={link} className={`${blogCount < 2 ? 'flex gap-x-6 items-end' : null}`}>
-        <img src={`${import.meta.env.VITE_ERP_URL}${image}`} className={`rounded-md object-cover ${blogCount < 2 ? 'w-[60%]' : 'w-full'}`} style={{aspectRatio:ratio}}/>
+        <img src={`${image}`} className={`rounded-md object-cover ${blogCount < 2 ? 'w-[60%]' : 'w-full'}`} style={{aspectRatio:ratio}}/>
   
         <div className='mt-6'>
           <h2 className="text-[#8A8A8A] text-sm mb-1">{category}</h2>
@@ -133,7 +133,7 @@ export default function Home(){
             {(dataShortcut ?? []).map((d) => 
               <a href={d.link} key={d.name} className='cursor-pointer lg:w-[75%] lg:h-[75%]'>
                 <picture className='flex flex-col justify-start text-center'>
-                  <img src={`${import.meta.env.VITE_ERP_URL}${d.image}`} className='lg:max-w-[60px] lg:max-h-[60px] max-w-[46px] max-h-[46px] w-full h-full mx-auto aspect-square'/>
+                  <img src={`${d.image}`} className='lg:max-w-[60px] lg:max-h-[60px] max-w-[46px] max-h-[46px] w-full h-full mx-auto aspect-square'/>
                   <p className='text-xs text-[#1C1C1C] mt-3'>{d.name}</p>
                 </picture>
               </a>
@@ -190,7 +190,7 @@ export default function Home(){
                   itemCode={product.item_code}
                   price={product.formatted_price}
                   category={product.item_category}
-                  thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                  thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
                   isGift={product?.item_group === "Gift" || product?.item_group === "Gift and Cards"}
                 />
               ))}
@@ -214,7 +214,7 @@ export default function Home(){
                     itemCode={product.item_code}
                     price={product.formatted_price}
                     category={product.item_category}
-                    thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                    thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
                     isGift={product?.item_group === "Gift" || product?.item_group === "Gift and Cards"}
                   />
                 ))}
@@ -237,7 +237,7 @@ export default function Home(){
                     itemCode={product.item_code}
                     price={product.formatted_price}
                     category={product.item_category}
-                    thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                    thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
                     isGift={product?.item_group === "Gift" || product?.item_group === "Gift and Cards"}
                   />
                 ))}

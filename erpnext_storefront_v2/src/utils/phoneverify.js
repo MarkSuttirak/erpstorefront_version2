@@ -7,7 +7,7 @@ const sendcallforphone = (phone) => {
 
 const phonverifynow = (phone) => {
     try {
-        return fetch(`${import.meta.env.VITE_ERP_URL}api/method/honda_api.api_calls.verifyuser.getphone?userphone=${phone}`, {
+        return fetch(`api/method/honda_api.api_calls.verifyuser.getphone?userphone=${phone}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -18,7 +18,7 @@ export default function DesktopSidebar(){
       <header className="pb-5">
         {data && (
           <div className='flex items-center'>
-            <img src={`${import.meta.env.VITE_ERP_URL}${data.user_image}`} width="64" className='rounded-[99px]'/>
+            <img src={`${data.user_image}`} width="64" className='rounded-[99px]'/>
             <div className='ml-3 flex flex-col'>
               <h2 className='text-[#333333] text-sm'>สวัสดี</h2>
               <span className='font-bold'>{data.full_name}</span>

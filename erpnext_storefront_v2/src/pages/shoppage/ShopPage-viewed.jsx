@@ -45,7 +45,7 @@ export default function ShopPageViewed({setCurrentPage}){
                 desc={product.item_group}
                 itemCode={product.item_code}
                 price={product.formatted_price}
-                thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
               />
             ))}
           </section>
@@ -64,7 +64,7 @@ export default function ShopPageViewed({setCurrentPage}){
               desc={product.item_group}
               itemCode={product.item_code}
               price={product.formatted_price}
-              thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+              thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
             />
           ))}
         </section>

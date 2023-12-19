@@ -1,4 +1,4 @@
-import { FrappeProvider } from "frappe-react-sdk";
+import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -53,13 +53,13 @@ import SearchPage from "./pages/SearchPage";
 export default function App() {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!getToken()) {
+    if (!getToken() ) {
       navigate("/login");
     }
   }, [navigate]);
 
   return (
-    <FrappeProvider url={import.meta.env.VITE_ERP_URL}
+    <FrappeProvider 
       enableSocket={false}
       tokenParams={{
         type: "token",

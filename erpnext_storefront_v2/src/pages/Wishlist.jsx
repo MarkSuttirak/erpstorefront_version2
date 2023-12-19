@@ -61,7 +61,7 @@ export default function Wishlist(){
             {(products ?? []).map((product) => (
               <WishlistProducts 
                 key={product.item_name} 
-                image={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"} 
+                image={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"} 
                 name={product.item_name} 
                 price={product.formatted_price} 
                 desc={product.item_group}/>

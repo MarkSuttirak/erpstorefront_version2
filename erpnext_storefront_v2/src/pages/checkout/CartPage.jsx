@@ -53,7 +53,7 @@ export default function CartPage(){
                     return (
                       <li key={itemCode} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
-                          <img src={`${import.meta.env.VITE_ERP_URL}${product?.website_image}`} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
+                          <img src={`${product?.website_image}`} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
                         </div>
 
                         <div className="ml-4 flex flex-1 flex-col gap-y-[15px]">

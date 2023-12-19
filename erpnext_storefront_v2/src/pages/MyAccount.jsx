@@ -186,7 +186,7 @@ export default function MyAccount(){
       <header className="pt-20 pb-[60px] px-5 bg-[#BBE5BB] w-full lg:max-w-[1200px] block lg:hidden">
         {data && (
           <div className='flex items-center'>
-            <img src={`${import.meta.env.VITE_ERP_URL}${data.user_image}`} width="64" className='rounded-[99px]'/>
+            <img src={`${data.user_image}`} width="64" className='rounded-[99px]'/>
             <div className='ml-3 flex flex-col'>
               <span className='font-bold'>{data.full_name}</span>
               <Link className='flex items-center gap-x-1' to='/edit-profile'>

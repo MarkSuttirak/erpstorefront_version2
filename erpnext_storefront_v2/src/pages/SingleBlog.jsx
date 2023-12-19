@@ -27,7 +27,7 @@ export default function SingleBlog() {
           name:id
         }]}/>
         <section className='max-w-[955px] mx-auto lg:mt-10'>
-          <img className={`w-full aspect-video object-cover lg:rounded-lg`} src={`${import.meta.env.VITE_ERP_URL}${data?.meta_image}`} alt="" />
+          <img className={`w-full aspect-video object-cover lg:rounded-lg`} src={`${data?.meta_image}`} alt="" />
 
           <article className='px-5 py-6 lg:px-0'>
             <h2 className='text-[#8A8A8A] mb-4'>{data?.blog_category}</h2>

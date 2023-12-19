@@ -40,7 +40,7 @@ export default function RewardPage(){
       <header className="px-5 pb-[60px] bg-[#BBE5BB] w-full pt-20 lg:hidden">
         {data && (
           <div className='flex items-center'>
-            <img src={`${import.meta.env.VITE_ERP_URL}${data.user_image}`} width="64" className='rounded-[99px]'/>
+            <img src={`${data.user_image}`} width="64" className='rounded-[99px]'/>
             <div className='ml-3 flex flex-col'>
               <span className='font-bold'>{data.full_name}</span>
               <Link className='flex items-center gap-x-1' to='/edit-profile'>
@@ -142,7 +142,7 @@ export default function RewardPage(){
                     desc={product.item_group}
                     itemCode={product.item_code}
                     price={product.formatted_price}
-                    thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                    thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
                   />
                 ))}
               </div>
@@ -162,7 +162,7 @@ export default function RewardPage(){
                     desc={product.item_group}
                     itemCode={product.item_code}
                     price={product.formatted_price}
-                    thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
+                    thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"}
                   />
                 ))}
               </div>

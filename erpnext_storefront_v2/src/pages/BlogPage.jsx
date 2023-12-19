@@ -24,7 +24,7 @@ export default function BlogPage(){
   const BlogCard = ({title, image, date, link, ratio}) => {
     return (
       <Link to={link} className="w-full">
-        <img src={`${import.meta.env.VITE_ERP_URL}${image}`} className='rounded-md w-full object-cover' style={{aspectRatio:ratio}}/>
+        <img src={`${image}`} className='rounded-md w-full object-cover' style={{aspectRatio:ratio}}/>
         <h2 className='mt-4 whitespace-normal text-[#1C1C1C] text-sm font-bold'>{title}</h2>
 
         <p className='text-[#8A8A8A] mt-[5px] text-xs flex items-center'>

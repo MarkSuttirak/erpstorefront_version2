@@ -4,7 +4,7 @@ import { Calendar } from "@untitled-ui/icons-react";
 export default function BlogCardDesktop({title, image, date, link, category, ratio}){
   return (
     <Link to={link}>
-      <img src={`${import.meta.env.VITE_ERP_URL}${image}`} className={`rounded-md object-cover w-full`} style={{aspectRatio:ratio}}/>
+      <img src={`${image}`} className={`rounded-md object-cover w-full`} style={{aspectRatio:ratio}}/>
 
       <div className='mt-6'>
         <h2 className="text-[#8A8A8A] text-sm mb-1">{category}</h2>

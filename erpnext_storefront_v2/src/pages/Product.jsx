@@ -150,7 +150,7 @@ export default function Product(){
             >
               <div className="flex justify-center h-full basis-full shrink-0 grow snap-center lg:max-w-[700px] lg:w-[700px]">
                 <img
-                  src={product?.website_image !== null && `${import.meta.env.VITE_ERP_URL}${product?.website_image}`}
+                  src={product?.website_image !== null && `${product?.website_image}`}
                   className={`object-cover w-full h-full lg:rounded-md ${product?.website_image === null && "bg-[#C5C5C5]"}`}
                   aria-label={product?.website_image}
                   alt={product?.website_image}
@@ -276,7 +276,7 @@ export default function Product(){
                 itemCode={product.item_code}
                 price={product.formatted_price}
                 category={product.item_category}
-                thumbnail={product.website_image ? `${import.meta.env.VITE_ERP_URL}${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"} />
+                thumbnail={product.website_image ? `${product.website_image}` : "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png"} />
             ))}
           </div>
         </div>

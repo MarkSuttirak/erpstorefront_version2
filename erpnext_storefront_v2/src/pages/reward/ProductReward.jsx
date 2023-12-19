@@ -92,7 +92,7 @@ export default function ProductReward(){
           >
             <div className="flex justify-center h-full basis-full shrink-0 grow snap-center">
               <img
-                src={product?.website_image !== null && `${import.meta.env.VITE_ERP_URL}${product?.website_image}`}
+                src={product?.website_image !== null && `${product?.website_image}`}
                 className={`object-cover w-full h-full ${product?.website_image === null && "bg-[#C5C5C5]"}`}
                 aria-label={product?.website_image}
                 alt={product?.website_image}

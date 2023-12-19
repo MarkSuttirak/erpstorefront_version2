@@ -35,7 +35,7 @@ export default function StoreLocation(){
               <Link to={`/store-location-details/${d.name}`} className={`font-bold text-sm flex flex-col border-b border-b-[#E3E3E3] lg:border-b-0`}>
                 <div className="p-5 lg:0 relative">
                   <h3 className="text-[#F2F2F2] text-sm font-bold absolute text-end px-[10px] py-[6px] max-w-[520px] lg:max-w-[1200px] mx-auto" style={{width:"calc(100% - 40px)"}}>Now open</h3>
-                  <img src={`${import.meta.env.VITE_ERP_URL}${d.store_image}`} className="rounded-[8px] w-full aspect-[3/2] object-cover"/>
+                  <img src={`${d.store_image}`} className="rounded-[8px] w-full aspect-[3/2] object-cover"/>
                 </div>
 
                 <div className="p-5 pt-0 flex justify-between lg:flex-col lg:justify-start">
