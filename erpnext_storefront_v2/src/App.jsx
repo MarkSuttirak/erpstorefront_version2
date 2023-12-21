@@ -1,5 +1,5 @@
 import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
-import { Routes, Route, useNavigate, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Routes, Route, useNavigate, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -107,7 +107,7 @@ function App() {
   useEffect(() => {
     console.log(getToken());
     if ( !getToken() && !currentUser ) {
-      navigate("/login");
+      window.location.href = "/login"
     }
   }, [navigate, currentUser]);
 
@@ -116,7 +116,7 @@ function App() {
         <ProductsProvider>
           <CartProvider>
             <HeaderDesktop />
-            
+                <RouterProvider router={router}/>
             <FooterMenuDesktop />
           </CartProvider>
         </ProductsProvider>
