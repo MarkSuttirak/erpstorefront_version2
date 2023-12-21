@@ -1,5 +1,5 @@
 import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
-import { Routes, Route, useNavigate, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import { Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -51,6 +51,17 @@ import BlogPage from "./pages/BlogPage";
 import SearchPage from "./pages/SearchPage";
 
 
+
+const RouteLayout = ({children}) => {
+  return(
+    <>
+      <HeaderDesktop />
+      {children}
+      <FooterMenuDesktop/>
+    </>
+  )
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" >
@@ -95,6 +106,7 @@ const router = createBrowserRouter(
       <Route path="/single-blog/:id" element={<SingleBlog />} />
       <Route path="/payment" element={<PaymentPages />}/>
       <Route path="/search" element={<SearchPage />}/>
+
     </Route>
   ),
   {basename : '/erpnext_storefront_v2' }
@@ -102,27 +114,25 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  const navigate = useNavigate();
   const { currentUser } = useFrappeAuth();
   useEffect(() => {
     console.log(getToken());
     if ( !getToken() && !currentUser ) {
-      window.location.href = "/login"
+      //window.location.href = "/login"
     }
-  }, [navigate, currentUser]);
+  }, [ currentUser]);
 
   return (
       <UserProvider>
         <ProductsProvider>
-          <CartProvider>
-            <HeaderDesktop />
+          <CartProvider>          
                 <RouterProvider router={router}/>
-            <FooterMenuDesktop />
           </CartProvider>
         </ProductsProvider>
       </UserProvider>
   )
 }
+
 
 export const AppWrapper = () => {
   return (

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getToken, removeToken, setToken } from '../utils/helper';
-import { useNavigate } from 'react-router-dom';
 import { useFrappeGetCall, useFrappeAuth } from 'frappe-react-sdk';
 
 
@@ -8,7 +7,6 @@ const userContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const navigate = useNavigate();
     const {login : useLogin} = useFrappeAuth()
 
 
@@ -43,7 +41,6 @@ export const UserProvider = ({ children }) => {
     const logout = async () => {
         setUser(null);
         removeToken();
-        navigate("/login");
     };
 
     return <userContext.Provider value={{
