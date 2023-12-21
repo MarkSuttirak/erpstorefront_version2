@@ -1,5 +1,5 @@
 import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
-import { Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet } from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -52,7 +52,7 @@ import SearchPage from "./pages/SearchPage";
 
 
 
-const RouteLayout = ({children}) => {
+const RouteLayout = () => {
   return(
     <>
       <HeaderDesktop />

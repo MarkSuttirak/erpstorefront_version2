@@ -26,6 +26,7 @@ export default defineConfig({
 
 function getProxyOptions({ port }) {
 	return {
+		
 		"^/(app|login|api|assets|files|pages)": {
 			target: `http://127.0.0.1:${port}`,
 			ws: true,
