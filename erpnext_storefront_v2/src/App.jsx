@@ -1,5 +1,5 @@
 import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -51,66 +51,72 @@ import BlogPage from "./pages/BlogPage";
 import SearchPage from "./pages/SearchPage";
 
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" >
+      <Route index element={<Home />} />
+      <Route path="/consent" element={<Consent />} />
+      <Route path="/cart" element={<CartPage />}/>
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />}/>
+      <Route path="/how-to-collect-rewards" element={<HowRedeemReward />} />
+      <Route path="/member-conditions" element={<MemberConditions />} />
+      <Route path="/collect-points" element={<CollectPoints />} />
+      <Route path="products/:id" element={<Product />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/thankyou" element={<BankInfoPage />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/my-account" element={<MyAccount />}/>
+      <Route path="/my-id" element={<MyID />}/>
+      <Route path="/my-order" element={<MyOrder />}/>
+      <Route path="/my-order-details/:id" element={<MyOrderDetails />}/>
+      <Route path="/reward-history" element={<RewardHistory />} />
+      <Route path="/rewards" element={<RewardPage />}/>
+      <Route path="/reward/:id" element={<RewardDetails />}/>
+      <Route path="/shipping-address" element={<ShippingAddress />}/>
+      <Route path="/welcome" element={<Welcome />}/>
+      <Route path="/signup" element={<Signup />}/>
+      <Route path="/fill-info" element={<FillInfo />}/>
+      <Route path="/success" element={<Success />}/>
+      <Route path="/edit-profile" element={<EditProfile />}/>
+      <Route path="/wishlist" element={<Wishlist />}/>
+      <Route path="/payment-methods" element={<PaymentMethods />}/>
+      <Route path="/my-coupon" element={<MyCoupon />}/>
+      <Route path="/my-coupon-details/:id" element={<MyCouponDetails />}/>
+      <Route path="/categories" element={<CategoryPage />}/>
+      <Route path="/shop" element={<ShopPage />}/>
+      <Route path="/viewed-products" element={<ShopPageViewed />}/>
+      <Route path="/store-location" element={<StoreLocation />} />
+      <Route path="/store-location-details/:id" element={<StoreLocationDetails />} />
+      <Route path="/member-level" element={<MemberLevel />}/>
+      <Route path="/member-privileges" element={<MemberPrivileges />}/>
+      <Route path="/free-gift-banner" element={<FreeGiftBannerPage />}/>
+      <Route path="/blog" element={<BlogPage />}/>
+      <Route path="/single-blog/:id" element={<SingleBlog />} />
+      <Route path="/payment" element={<PaymentPages />}/>
+      <Route path="/search" element={<SearchPage />}/>
+    </Route>
+  ),
+  {basename : '/erpnext_storefront_v2' }
 
+)
 
 function App() {
-  /*const navigate = useNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useFrappeAuth();
   useEffect(() => {
     console.log(getToken());
     if ( !getToken() && !currentUser ) {
       navigate("/login");
     }
-  }, [navigate, currentUser]);*/
+  }, [navigate, currentUser]);
 
   return (
       <UserProvider>
         <ProductsProvider>
           <CartProvider>
             <HeaderDesktop />
-            <Routes basename='/erpnext_storefront_v2'>
-              <Route path="/" element={<Home />} />
-              <Route path="/consent" element={<Consent />} />
-              <Route path="/cart" element={<CartPage />}/>
-              <Route path="/terms-and-conditions" element={<TermsAndConditions />}/>
-              <Route path="/how-to-collect-rewards" element={<HowRedeemReward />} />
-              <Route path="/member-conditions" element={<MemberConditions />} />
-              <Route path="/collect-points" element={<CollectPoints />} />
-              <Route path="products/:id" element={<Product />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/thankyou" element={<BankInfoPage />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/my-account" element={<MyAccount />}/>
-              <Route path="/my-id" element={<MyID />}/>
-              <Route path="/my-order" element={<MyOrder />}/>
-              <Route path="/my-order-details/:id" element={<MyOrderDetails />}/>
-              <Route path="/reward-history" element={<RewardHistory />} />
-              <Route path="/rewards" element={<RewardPage />}/>
-              <Route path="/reward/:id" element={<RewardDetails />}/>
-              <Route path="/shipping-address" element={<ShippingAddress />}/>
-              <Route path="/welcome" element={<Welcome />}/>
-              <Route path="/signup" element={<Signup />}/>
-              <Route path="/fill-info" element={<FillInfo />}/>
-              <Route path="/success" element={<Success />}/>
-              <Route path="/edit-profile" element={<EditProfile />}/>
-              <Route path="/wishlist" element={<Wishlist />}/>
-              <Route path="/payment-methods" element={<PaymentMethods />}/>
-              <Route path="/my-coupon" element={<MyCoupon />}/>
-              <Route path="/my-coupon-details/:id" element={<MyCouponDetails />}/>
-              <Route path="/categories" element={<CategoryPage />}/>
-              <Route path="/shop" element={<ShopPage />}/>
-              <Route path="/viewed-products" element={<ShopPageViewed />}/>
-              <Route path="/store-location" element={<StoreLocation />} />
-              <Route path="/store-location-details/:id" element={<StoreLocationDetails />} />
-              <Route path="/member-level" element={<MemberLevel />}/>
-              <Route path="/member-privileges" element={<MemberPrivileges />}/>
-              <Route path="/free-gift-banner" element={<FreeGiftBannerPage />}/>
-              <Route path="/blog" element={<BlogPage />}/>
-              <Route path="/single-blog/:id" element={<SingleBlog />} />
-              <Route path="/payment" element={<PaymentPages />}/>
-              <Route path="/search" element={<SearchPage />}/>
-            </Routes>
+            
             <FooterMenuDesktop />
           </CartProvider>
         </ProductsProvider>
