@@ -1,5 +1,5 @@
 import { FrappeProvider , useFrappeAuth } from "frappe-react-sdk";
-import { Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import { Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -56,7 +56,7 @@ const RouteLayout = ({children}) => {
   return(
     <>
       <HeaderDesktop />
-      {children}
+      <Outlet/>
       <FooterMenuDesktop/>
     </>
   )
@@ -64,7 +64,7 @@ const RouteLayout = ({children}) => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" >
+    <Route path="/" element={<RouteLayout/>}>
       <Route index element={<Home />} />
       <Route path="/consent" element={<Consent />} />
       <Route path="/cart" element={<CartPage />}/>
