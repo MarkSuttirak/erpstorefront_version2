@@ -1,0 +1,210 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:store_name",
+    "creation": "2023-10-05 10:19:11.980816",
+    "default_view": "List",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+     "store_name",
+     "location",
+     "contact_phone",
+     "map",
+     "store_location",
+     "store_image",
+     "monday",
+     "opening_time_monday",
+     "closing_time_monday",
+     "tuesday",
+     "opening_time_tuesday",
+     "closing_time_tuesday",
+     "wednesday",
+     "opening_time_wednesday",
+     "closing_time_wednesday",
+     "thursday",
+     "opening_time_thursday",
+     "closing_time_thursday",
+     "friday",
+     "opening_time_friday",
+     "closing_time_friday",
+     "saturday",
+     "opening_time_saturday",
+     "closing_time_saturday",
+     "sunday",
+     "opening_time_sunday",
+     "closing_time_sunday"
+    ],
+    "fields": [
+     {
+      "fieldname": "store_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Store name",
+      "reqd": 1,
+      "unique": 1
+     },
+     {
+      "fieldname": "location",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Location",
+      "reqd": 1
+     },
+     {
+      "fieldname": "map",
+      "fieldtype": "Geolocation",
+      "label": "Map"
+     },
+     {
+      "fieldname": "store_location",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Store location",
+      "reqd": 1
+     },
+     {
+      "fieldname": "contact_phone",
+      "fieldtype": "Data",
+      "label": "Contact Phone",
+      "reqd": 1
+     },
+     {
+      "fieldname": "monday",
+      "fieldtype": "Section Break",
+      "label": "Monday"
+     },
+     {
+      "fieldname": "opening_time_monday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "opening_time_tuesday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_monday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "tuesday",
+      "fieldtype": "Section Break",
+      "label": "Tuesday"
+     },
+     {
+      "fieldname": "closing_time_tuesday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "wednesday",
+      "fieldtype": "Section Break",
+      "label": "Wednesday"
+     },
+     {
+      "fieldname": "opening_time_wednesday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_wednesday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "thursday",
+      "fieldtype": "Section Break",
+      "label": "Thursday"
+     },
+     {
+      "fieldname": "opening_time_thursday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_thursday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "friday",
+      "fieldtype": "Section Break",
+      "label": "Friday"
+     },
+     {
+      "fieldname": "opening_time_friday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_friday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "saturday",
+      "fieldtype": "Section Break",
+      "label": "Saturday"
+     },
+     {
+      "fieldname": "opening_time_saturday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_saturday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "sunday",
+      "fieldtype": "Section Break",
+      "label": "Sunday"
+     },
+     {
+      "fieldname": "opening_time_sunday",
+      "fieldtype": "Time",
+      "label": "Opening time"
+     },
+     {
+      "fieldname": "closing_time_sunday",
+      "fieldtype": "Time",
+      "label": "Closing time"
+     },
+     {
+      "fieldname": "store_image",
+      "fieldtype": "Attach Image",
+      "label": "Store image",
+      "reqd": 1
+     }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2023-10-05 16:46:21.054394",
+    "modified_by": "Administrator",
+    "module": "erpstorefront_version2",
+    "name": "Store Location",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+     {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+     }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+   }
